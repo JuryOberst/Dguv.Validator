@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="de" target-language="en" original="Resources.resx" tool-id="MultilingualAppToolkit" product-name="Dguv.Validator" product-version="1.0.0" build-num="0">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="3.1.1250.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="Resx">
+        <trans-unit id="Resx/CheckBbnrUvError" translate="yes" xml:space="preserve">
+          <source>Es muss eine BBNR-UV angegeben werden.</source>
+          <target state="signed-off">A BBNR-UV must be specified.</target>
+        </trans-unit>
+        <trans-unit id="Resx/CheckBbnrUvNameError" translate="yes" xml:space="preserve">
+          <source>Es muss ein Name für eine BBNR-UV angegeben werden.</source>
+          <target state="signed-off">A name for a BBNR-UV must be specified.</target>
+        </trans-unit>
+        <trans-unit id="Resx/CheckMaxLengthError" translate="yes" xml:space="preserve">
+          <source>Der Wert von maxLength darf nicht kleiner als -1 oder minLength sein und darf nicht den Wert 0 haben.</source>
+          <target state="signed-off">The value of maxLength must be not less than -1 or minLength and must not have a value of 0.</target>
+        </trans-unit>
+        <trans-unit id="Resx/CheckMinLengthError" translate="yes" xml:space="preserve">
+          <source>Der Wert von minLength darf nicht kleiner als -1 sein.</source>
+          <target state="signed-off">The value of minLength must be not less than -1.</target>
+        </trans-unit>
+        <trans-unit id="Resx/StatusMemberIdTooShort" translate="yes" xml:space="preserve">
+          <source>Die Mitgliedsnummer ist zu kurz. Sie muss eine Länge von mindestens {0} Zeichen haben.</source>
+          <target state="signed-off" state-qualifier="mt-suggestion">The membership number is too short. She must have a length of at least {0} characters.</target>
+        </trans-unit>
+        <trans-unit id="Resx/StatusMemberIdTooLong" translate="yes" xml:space="preserve">
+          <source>Die Mitgliedsnummer ist zu lang. Sie darf höchstens eine Länge von {0} Zeichen haben.</source>
+          <target state="signed-off">The membership number is too long. She may must not be longer than {0} characters.</target>
+        </trans-unit>
+        <trans-unit id="Resx/StatusMemberIdMissing" translate="yes" xml:space="preserve">
+          <source>Es muss eine Mitgliedsnummer angegeben werden.</source>
+          <target state="signed-off">A membership number must be specified.</target>
+        </trans-unit>
+        <trans-unit id="Resx/StatusMemberIdInvalidCharacter" translate="yes" xml:space="preserve">
+          <source>Die Mitgliedsnummer enthält ein oder mehrere ungültige Zeichen. Erlaubt sind nur folgende Zeichen: "{0}"</source>
+          <target state="signed-off">The membership number contains one or more invalid characters. Only the following characters are allowed: "{0}"</target>
+        </trans-unit>
+        <trans-unit id="Resx/StatusInvalidBbnrUv" translate="yes" xml:space="preserve">
+          <source>Ungültige BBNR-UV</source>
+          <target state="signed-off">Invalid BBNR-UV</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>
