@@ -20,8 +20,8 @@
     <file src="_._" target="lib\native\" />
     <file src="install.ps1" target="tools\native\" />
     <file src="uninstall.ps1" target="tools\native\" />
-    <file src="..\Dguv.Validator\bin\$configuration$\en\Dguv.Validator.resources.dll" target="lib\portable-net45+win+wpa81+MonoAndroid10+MonoTouch10\en\" />
-    <file src="..\Dguv.Validator\bin\$configuration$\Dguv.Validator.dll" target="lib\portable-net45+win+wpa81+MonoAndroid10+MonoTouch10\" />
-    <file src="..\Dguv.Validator\bin\$configuration$\Dguv.Validator.xml" target="lib\portable-net45+win+wpa81+MonoAndroid10+MonoTouch10\" />
+    <file src="..\Dguv.Validator\bin\$configuration$\en\Dguv.Validator.resources.dll" target="lib\portable-net45+win+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\en\" />
+    <file src="..\Dguv.Validator\bin\$configuration$\Dguv.Validator.dll" target="lib\portable-net45+win+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\" />
+    <file src="..\Dguv.Validator\bin\$configuration$\Dguv.Validator.xml" target="lib\portable-net45+win+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\" />
   </files>
 </package>
