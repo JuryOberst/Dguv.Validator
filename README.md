@@ -1,6 +1,6 @@
 # Dguv.Validator
 
-[![Build-Status](https://img.shields.io/teamcity/http/188.40.59.207:8081/s/OpenSource_DguvValidator.svg)](http://188.40.59.207:8081/viewType.html?buildTypeId=OpenSource_DguvValidator)
+[![Build-Status](https://img.shields.io/teamcity/http/188.40.59.207:8081/s/OpenSource_DguvValidator.svg?label=TeamCity)](http://188.40.59.207:8081/viewType.html?buildTypeId=OpenSource_DguvValidator&guest=1)
 
 Eine Prüffunktion für die Mitgliedsnummern der deutsche Unfallversicherungsträger.
 
