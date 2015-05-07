@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>Dataline.Dguv.Validator</id>
+    <id>Dataline.$id$</id>
     <version>$version$</version>
     <title>Mitgliedsnummer-Prüfungen für Unfallversicherungsträger</title>
     <authors>DATALINE GmbH &amp; Co. KG</authors>
@@ -12,9 +12,6 @@
     <copyright>2015 DATALINE GmbH</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>Unfallversicherungsträger DGUV BBNR-UV Mitgliedsnummer Prüfung Prüfungen Unfallversicherung Validator</tags>
-    <dependencies>
-      <dependency id="CenterCLR.SgmlReader" version="2014.12.7.3" />
-    </dependencies>
   </metadata>
   <files>
     <file src="_._" target="lib\native\" />

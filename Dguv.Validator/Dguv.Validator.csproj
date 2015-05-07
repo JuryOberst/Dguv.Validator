@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Dguv.Validator.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

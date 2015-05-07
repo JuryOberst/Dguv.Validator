@@ -8,8 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CF7451D5-B74A-40CC-8AFA-BB6476A9A05B}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE.md = LICENSE.md
-		nuget-pack.ps1 = nuget-pack.ps1
-		nuget-push.ps1 = nuget-push.ps1
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -17,7 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dguv.Validator.Tests", "Dgu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{3D6828DC-529E-4831-AEAA-4292F70EC442}"
 	ProjectSection(SolutionItems) = preProject
-		NuGet\Dguv.Validator.nuspec = NuGet\Dguv.Validator.nuspec
 		NuGet\install.ps1 = NuGet\install.ps1
 		NuGet\uninstall.ps1 = NuGet\uninstall.ps1
 	EndProjectSection
