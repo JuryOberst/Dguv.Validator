@@ -17,8 +17,6 @@
     <file src="..\NuGet\_._" target="lib\native\" />
     <file src="..\NuGet\install.ps1" target="tools\native\" />
     <file src="..\NuGet\uninstall.ps1" target="tools\native\" />
-    <file src="bin\$configuration$\en\Dguv.Validator.resources.dll" target="lib\portable-net45+win+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\en\" />
-    <file src="bin\$configuration$\Dguv.Validator.dll" target="lib\portable-net45+win+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\" />
-    <file src="bin\$configuration$\Dguv.Validator.xml" target="lib\portable-net45+win+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\" />
+    <file src="bin\$configuration$\en\Dguv.Validator.resources.dll" target="lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\en\" />
   </files>
 </package>
