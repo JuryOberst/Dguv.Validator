@@ -6,7 +6,10 @@ Eine Prüffunktion für die Mitgliedsnummern der deutsche Unfallversicherungstr�
 
 # Lizenz
 
-Die Bibliothek steht unter der [MIT-Lizenz](LICENSE.md).
+Die Bibliothek steht unter der [MIT-Lizenz](LICENSE.md)
+und wurde bereitgestellt von:
+
+[![DATALINE](http://www.dataline.de/images/Logo_kleiner.png)](http://www.dataline.de)
 
 # Grundlegender Aufbau
 
