@@ -7,6 +7,9 @@ using Dguv.Validator.Checks;
 
 namespace Dguv.Validator
 {
+    /// <summary>
+    /// Hilfsfunktionen für den Aufbau der Prüffunktionen
+    /// </summary>
     public static class TableParserUtilities
     {
         private static readonly Regex _isNumber = new Regex("^[0-9]+$");
