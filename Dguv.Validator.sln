@@ -16,9 +16,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dguv.Validator.Tests", "Dgu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{3D6828DC-529E-4831-AEAA-4292F70EC442}"
 	ProjectSection(SolutionItems) = preProject
+		NuGet\install-web.ps1 = NuGet\install-web.ps1
 		NuGet\install.ps1 = NuGet\install.ps1
+		NuGet\uninstall-web.ps1 = NuGet\uninstall-web.ps1
 		NuGet\uninstall.ps1 = NuGet\uninstall.ps1
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dguv.Validator.Web", "Dguv.Validator.Web\Dguv.Validator.Web.csproj", "{612988DD-CAFB-4827-AF71-D7E35E7F16BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +38,10 @@ Global
 		{404B619F-89B4-45B3-B73D-4C3242D29DC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{404B619F-89B4-45B3-B73D-4C3242D29DC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{404B619F-89B4-45B3-B73D-4C3242D29DC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{612988DD-CAFB-4827-AF71-D7E35E7F16BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{612988DD-CAFB-4827-AF71-D7E35E7F16BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{612988DD-CAFB-4827-AF71-D7E35E7F16BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{612988DD-CAFB-4827-AF71-D7E35E7F16BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

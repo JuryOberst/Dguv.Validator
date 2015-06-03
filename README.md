@@ -13,11 +13,22 @@ und wurde bereitgestellt von:
 
 # Grundlegender Aufbau
 
+## Kern-Bibliothek
+
 Die Bibliothek besteht aus den folgenden Bereichen:
 
 * Prüffunktion für die Mitgliedsnummer eines einzelnen Unfallversicherungsträgers
 * Laden von Prüffunktionen für die Mitgliedsnummern
 * Validierung von Mitgliedsnummern von Unfallversicherungsträgern
+
+## Web-Bibliothek
+
+Diese Bibliothek enthält Funktionen zur Erstellung von Prüffunktionen
+basierend auf Informationen aus dem Internet:
+
+* [Mitgliedsnummern von der DGUV](http://www.dguv.de/de/mediencenter/hintergrund/meldeverfahren/mitgliedsnr/index.jsp)
+* [Anlage 20 der gemeinsamen Rundschreiben](http://www.gkv-datenaustausch.de/arbeitgeber/deuev/gemeinsame_rundschreiben/gemeinsame_rundschreiben.jsp)
+
 
 # Beispiel
 
@@ -40,5 +51,8 @@ if (status != null) {
 
 # Besonderheit
 
-Über die Klasse ```WebCheckProvider``` können die Prüfungen aus der aktuellen Tabelle
+Über die Klasse ```DguvHtmlCheckProvider``` können die Prüfungen aus der aktuellen Tabelle
 von [dieser Web-Seite](http://www.dguv.de/de/mediencenter/hintergrund/meldeverfahren/mitgliedsnr/index.jsp) erstellt werden.
+
+Wenn die Klasse ```GkvAnlage20CheckProvider``` verwendet wird, dann werden die Prüfungen anhand
+einer PDF-Datei der Anlage 20 der [gemeinsamen Rundschreiben](http://www.gkv-datenaustausch.de/arbeitgeber/deuev/gemeinsame_rundschreiben/gemeinsame_rundschreiben.jsp) erstellt.

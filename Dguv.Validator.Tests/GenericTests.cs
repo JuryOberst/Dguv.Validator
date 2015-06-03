@@ -19,8 +19,15 @@ namespace Dguv.Validator.Tests
         [Fact]
         public async Task TestWebProvider()
         {
-            var provider = new WebCheckProvider();
+            var provider = new DguvHtmlCheckProvider();
             Assert.Equal(57, (await provider.LoadChecks()).Count());
+        }
+
+        [Fact]
+        public async Task TestWebPdfProvider()
+        {
+            var provider = new GkvAnlage20CheckProvider();
+            Assert.Equal(71, (await provider.LoadChecks()).Count());
         }
     }
 }
