@@ -13,7 +13,7 @@ namespace Dguv.Validator.Tests
         public async Task TestStaticProvider()
         {
             var provider = new StaticCheckProvider();
-            Assert.Equal(57, (await provider.LoadChecks()).Count());
+            Assert.Equal(71, (await provider.LoadChecks()).Count());
         }
 
         [Fact]
