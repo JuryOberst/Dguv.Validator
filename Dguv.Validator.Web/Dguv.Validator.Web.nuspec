@@ -14,6 +14,9 @@
     <copyright>2015 DATALINE GmbH</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>Unfallversicherungsträger DGUV BBNR-UV Mitgliedsnummer Prüfung Prüfungen Unfallversicherung Validator HTML GKV PDF</tags>
+    <dependencies>
+      <dependency id="Dataline.Dguv.Validator" version="$version$" />
+    </dependencies>
   </metadata>
   <files>
     <file src="..\NuGet\_._" target="lib\native\" />
