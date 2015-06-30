@@ -8,9 +8,9 @@
     <description>Bibliothek für Mitgliedsnummer-Prüfungen für Unfallversicherungsträger basierend auf Internet-Quellen</description>
     <releaseNotes>Erste Version</releaseNotes>
     <language>de-DE</language>
-    <projectUrl>https://github.com/dataline/Dguv.Validator</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/dataline/Dguv.Validator/master/dataline-64.png</iconUrl>
-    <licenseUrl>https://github.com/dataline/Dguv.Validator/wiki/Lizenz</licenseUrl>
+    <projectUrl>https://github.com/dataline-gmbh/Dguv.Validator</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/dataline-gmbh/Dguv.Validator/master/dataline-64.png</iconUrl>
+    <licenseUrl>https://github.com/dataline-gmbh/Dguv.Validator/wiki/Lizenz</licenseUrl>
     <copyright>2015 DATALINE GmbH</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>Unfallversicherungsträger DGUV BBNR-UV Mitgliedsnummer Prüfung Prüfungen Unfallversicherung Validator HTML GKV PDF</tags>
