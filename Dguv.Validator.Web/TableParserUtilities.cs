@@ -45,11 +45,15 @@ namespace Dguv.Validator
         /// Ermittelt die gültigen Zeichen der Mitgliedsnummer aus der Tabelle der DGUV.
         /// </summary>
         /// <param name="info">Die Information über die gültigen Zeichen</param>
-        /// <returns>Die gültigen Zeichen für die Mitgliedsnummer</returns>
-        private static string ParseValidChars(string info)
+        /// <param name="validChars">Die gültigen Zeichen für die Mitgliedsnummer</param>
+        /// <returns><code>true</code>, wenn der Text in <paramref name="info"/> gültig und <paramref name="validChars"/> gesetzt wurde.</returns>
+        public static bool TryParseValidChars(string info, out string validChars)
         {
             if (string.IsNullOrEmpty(info) || string.Equals(info, "keine Prüfung", StringComparison.OrdinalIgnoreCase))
-                return null;
+            {
+                validChars = null;
+                return true;
+            }
 
             var result = new StringBuilder();
             var parts = info.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
@@ -91,11 +95,26 @@ namespace Dguv.Validator
                             break;
                         }
 
-                        throw new NotSupportedException();
+                        validChars = null;
+                        return false;
                 }
             }
 
-            return result.ToString();
+            validChars = result.ToString();
+            return true;
+        }
+
+        /// <summary>
+        /// Ermittelt die gültigen Zeichen der Mitgliedsnummer aus der Tabelle der DGUV.
+        /// </summary>
+        /// <param name="info">Die Information über die gültigen Zeichen</param>
+        /// <returns>Die gültigen Zeichen für die Mitgliedsnummer</returns>
+        private static string ParseValidChars(string info)
+        {
+            string result;
+            if (!TryParseValidChars(info, out result))
+                throw new NotSupportedException();
+            return result;
         }
     }
 }

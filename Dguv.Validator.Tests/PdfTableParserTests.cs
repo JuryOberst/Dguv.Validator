@@ -9,10 +9,14 @@ namespace Dguv.Validator.Tests
     [SuppressMessage("StyleCopPlus.StyleCopPlusRules", "SP2100:CodeLineMustNotBeLongerThan", Justification = "Reviewed. Suppression is OK here.")]
     public class PdfTableParserTests
     {
+        private const string PageStart = "Anlage 20 \nBBNR-UV Name des Unfallversicherungsträgers minimale maximale  gültiger Zeichenvorrat  \nLänge der Länge der der MNR \nMNR MNR \n";
+
+        private const string PageEnd = "Stand: 05.06.2014 Anlage 20 Seite 1 von 4 Version 2.54 ";
+
         [Fact]
         public void TestTableSimple()
         {
-            const string pageContent = "Anlage 20 \nGültige Betriebsnummer des zuständigen Unfallversicherungsträgers (BBNR-UV) und das in Abhängigkeit der BBNR-UV \njeweils gültige Format der Mitgliedsnummer (MNR) \n \n \nBBNR-UV Name des Unfallversicherungsträgers minimale maximale  gültiger Zeichenvorrat  \nLänge der Länge der der MNR \nMNR MNR \n01064065 Unfallkasse Sachsen 6 6 0-9 \nStand: 05.06.2014 Anlage 20 Seite 1 von 4 Version 2.54 ";
+            const string pageContent = PageStart + "01064065 Unfallkasse Sachsen 6 6 0-9 \n" + PageEnd;
             var parser = new PdfTableParser();
             parser.Parse(pageContent);
             var checks = parser.GetChecks();
@@ -39,7 +43,7 @@ namespace Dguv.Validator.Tests
         [Fact]
         public void TestNoCheck()
         {
-            const string pageContent = "Anlage 20 \nGültige Betriebsnummer des zuständigen Unfallversicherungsträgers (BBNR-UV) und das in Abhängigkeit der BBNR-UV \njeweils gültige Format der Mitgliedsnummer (MNR) \n \n \nBBNR-UV Name des Unfallversicherungsträgers minimale maximale  gültiger Zeichenvorrat  \nLänge der Länge der der MNR \nMNR MNR \n01627953 Hanseatische Feuerwehr-Unfallkasse Nord keine Prüfung keine Prüfung keine Prüfung  \nStand: 05.06.2014 Anlage 20 Seite 1 von 4 Version 2.54 ";
+            const string pageContent = PageStart + "01627953 Hanseatische Feuerwehr-Unfallkasse Nord keine Prüfung keine Prüfung keine Prüfung  \n" + PageEnd;
             var parser = new PdfTableParser();
             parser.Parse(pageContent);
             var checks = parser.GetChecks();
@@ -56,7 +60,7 @@ namespace Dguv.Validator.Tests
         [Fact]
         public void TestMultiLine()
         {
-            const string pageContent = "Anlage 20 \nGültige Betriebsnummer des zuständigen Unfallversicherungsträgers (BBNR-UV) und das in Abhängigkeit der BBNR-UV \njeweils gültige Format der Mitgliedsnummer (MNR) \n \n \nBBNR-UV Name des Unfallversicherungsträgers minimale maximale  gültiger Zeichenvorrat  \nLänge der Länge der der MNR \nMNR MNR \n18477668 Kommunale Unfallversicherung Bayern (ehemals Unfallkasse 5 9 0-9, \nMünchen) \nStand: 05.06.2014 Anlage 20 Seite 1 von 4 Version 2.54 ";
+            const string pageContent = PageStart + "18477668 Kommunale Unfallversicherung Bayern (ehemals Unfallkasse 5 9 0-9, \nMünchen) \n" + PageEnd;
             var parser = new PdfTableParser();
             parser.Parse(pageContent);
             var checks = parser.GetChecks();
@@ -72,8 +76,8 @@ namespace Dguv.Validator.Tests
         [Fact]
         public void TestMultiPageMultiLine()
         {
-            const string pageContent1 = "Anlage 20 \nBBNR-UV Name des Unfallversicherungsträgers minimale maximale  gültiger Zeichenvorrat  \nLänge der Länge der der MNR \nMNR MNR \n61635458 Berufsgenossenschaft Rohstoffe und chemische Industrie  7 9 0-9, / \nBranche chemische Industrie \nStand: 05.06.2014 Anlage 20 Seite 3 von 4 Version 2.54 ";
-            const string pageContent2 = "Anlage 20 \nBBNR-UV Name des Unfallversicherungsträgers minimale maximale  gültiger Zeichenvorrat  \nLänge der Länge der der MNR \nMNR MNR \n(ehemals Berufsgenossenschaft der chemischen Industrie) \n62279404 Berufsgenossenschaft der Bauwirtschaft – Karlsruhe 10 17 0-9, M, /, -, Blank, Punkt \n99011352 Berufsgenossenschaft für Transport und Verkehrswirtschaft  8 8 0-9 \nBereich Seeschifffahrt  \n(ehemals See-Berufsgenossenschaft) \n \nStand: 05.06.2014 Anlage 20 Seite 4 von 4 Version 2.54 ";
+            const string pageContent1 = PageStart + "61635458 Berufsgenossenschaft Rohstoffe und chemische Industrie  7 9 0-9, / \nBranche chemische Industrie \n" + PageEnd;
+            const string pageContent2 = PageStart + "(ehemals Berufsgenossenschaft der chemischen Industrie) \n62279404 Berufsgenossenschaft der Bauwirtschaft – Karlsruhe 10 17 0-9, M, /, -, Blank, Punkt \n99011352 Berufsgenossenschaft für Transport und Verkehrswirtschaft  8 8 0-9 \nBereich Seeschifffahrt  \n(ehemals See-Berufsgenossenschaft) \n \n" + PageEnd;
             var parser = new PdfTableParser();
             parser.Parse(pageContent1);
             parser.Parse(pageContent2);
@@ -107,6 +111,23 @@ namespace Dguv.Validator.Tests
                 Assert.Equal(8, check.MinLength);
                 Assert.Equal(8, check.MaxLength);
             }
+        }
+
+        [Fact]
+        public void TestContinuationValidChars()
+        {
+            const string pageContent = PageStart + "14066582 Berufsgenossenschaft der Bauwirtschaft 7 17 0-9, /, -, B, E, F, N, M, X, Z,\nBlank, Punkt\n" + PageEnd;
+            var parser = new PdfTableParser();
+            parser.Parse(pageContent);
+            var checks = parser.GetChecks();
+            Assert.Equal(1, checks.Count);
+            var item = checks[0];
+            var check = Assert.IsType<CharacterMapCheck>(item);
+            Assert.Equal("14066582", check.BbnrUv);
+            Assert.Equal("Berufsgenossenschaft der Bauwirtschaft", check.Name);
+            Assert.Equal(7, check.MinLength);
+            Assert.Equal(17, check.MaxLength);
+            Assert.All("0123456789/-BEFNMXZ .", c => Assert.Contains(check.ValidCharacters, c2 => c2 == c));
         }
     }
 }

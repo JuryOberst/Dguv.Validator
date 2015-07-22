@@ -61,18 +61,27 @@ namespace Dguv.Validator
                         continue;
                 }
 
+                string content = line;
                 if (_rowStatus == RowStatus.FirstLineParsed)
                 {
+                    if (line.StartsWith("Stand:", StringComparison.Ordinal))
+                    {
+                        // Ende der Tabelle
+                        break;
+                    }
+
                     // Wenn der Wert in der ersten Spalte eine Nummer ist, dann gehen wir
                     // davon aus, dass wir eine Betriebsnummer gefunden haben
                     if (TableParserUtilities.IsNumber(parts[0]))
                     {
                         _rowStatus = RowStatus.FirstLineExpected;
                     }
-                    else if (parts[0].StartsWith("Stand:", StringComparison.Ordinal))
+                    else if (_rowStatus == RowStatus.FirstLineParsed && _currentInfo != null && _currentInfo.ExpectMoreCharacters)
                     {
-                        // Ende der Tabelle
-                        break;
+                        content = _currentInfo.ParseValidChars(line);
+                        if (string.IsNullOrEmpty(content))
+                            continue;
+                        parts = content.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
                     }
                 }
 
@@ -86,7 +95,7 @@ namespace Dguv.Validator
                 else
                 {
                     // Name verlängern
-                    _currentInfo.Name.AppendFormat(" {0}", line.TrimEnd());
+                    _currentInfo.Name.AppendFormat(" {0}", content.TrimEnd());
                 }
             }
         }
@@ -143,6 +152,67 @@ namespace Dguv.Validator
             /// </summary>
             public string ValidChars { get; private set; }
 
+            /// <summary>
+            /// Holt einen Wert, der angibt, ob weitere gültige Zeichen erwartet werden.
+            /// </summary>
+            public bool ExpectMoreCharacters { get; private set; }
+
+            /// <summary>
+            /// Fügt die gültigen Zeichen zu <see cref="ValidChars"/> hinzu und liefert den Rest zurück.
+            /// </summary>
+            /// <param name="text">Der Text, der auf gültige Zeichen zu prüfen ist</param>
+            /// <returns>Der Rest von <paramref name="text"/> nach Entfernung der gültigen Zeichen</returns>
+            public string ParseValidChars(string text)
+            {
+                if (text.EndsWith(KeinePruefung, StringComparison.OrdinalIgnoreCase))
+                {
+                    ValidChars = string.Empty;
+                    return text.Substring(0, text.Length - KeinePruefung.Length).TrimEnd();
+                }
+
+                var pos = text.LastIndexOf(' ');
+                var endPos = text.Length;
+                while (pos > 0 && text[pos - 1] == ',')
+                {
+                    var part = text.Substring(pos, endPos - pos);
+                    if (!string.IsNullOrWhiteSpace(part))
+                    {
+                        string temp;
+                        if (!TableParserUtilities.TryParseValidChars(part, out temp))
+                        {
+                            pos = endPos + 1;
+                            break;
+                        }
+                    }
+                    endPos = pos - 1;
+                    pos = text.LastIndexOf(' ', endPos);
+                }
+
+                if (pos <= 0)
+                {
+                    var part = text.Substring(0, endPos);
+                    if (!string.IsNullOrWhiteSpace(part))
+                    {
+                        string temp;
+                        if (!TableParserUtilities.TryParseValidChars(part, out temp))
+                        {
+                            pos = endPos + 1;
+                        }
+                    }
+                }
+
+                if (pos >= text.Length)
+                    return text;
+
+                if (!string.IsNullOrEmpty(ValidChars) && !ValidChars.EndsWith(",", StringComparison.Ordinal))
+                    ValidChars += ", ";
+
+                ValidChars = (ValidChars ?? string.Empty) + text.Substring(pos + 1).TrimEnd();
+                ExpectMoreCharacters = ValidChars.EndsWith(",");
+
+                return pos == -1 ? string.Empty : text.Substring(0, pos).TrimEnd();
+            }
+
             private string ParseMaxLength(string text)
             {
                 var result = ParseLength(text);
@@ -155,22 +225,6 @@ namespace Dguv.Validator
                 var result = ParseLength(text);
                 MinLength = result.Item1;
                 return result.Item2;
-            }
-
-            private string ParseValidChars(string text)
-            {
-                if (text.EndsWith(KeinePruefung, StringComparison.OrdinalIgnoreCase))
-                {
-                    ValidChars = string.Empty;
-                    return text.Substring(0, text.Length - KeinePruefung.Length).TrimEnd();
-                }
-
-                var pos = text.LastIndexOf(' ');
-                while (text[pos - 1] == ',')
-                    pos = text.LastIndexOf(' ', pos - 1);
-
-                ValidChars = text.Substring(pos + 1);
-                return text.Substring(0, pos).TrimEnd();
             }
 
             private Tuple<string, string> ParseLength(string text)
