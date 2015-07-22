@@ -6,7 +6,7 @@
     <title>Mitgliedsnummer-Prüfungen für Unfallversicherungsträger erstellt aus Internet-Quellen</title>
     <authors>DATALINE GmbH &amp; Co. KG</authors>
     <description>Bibliothek für Mitgliedsnummer-Prüfungen für Unfallversicherungsträger basierend auf Internet-Quellen</description>
-    <releaseNotes>Erste Version</releaseNotes>
+    <releaseNotes>Korrektur für UVs 14066582 und 42884688</releaseNotes>
     <language>de-DE</language>
     <projectUrl>https://github.com/dataline-gmbh/Dguv.Validator</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/dataline-gmbh/Dguv.Validator/master/dataline-64.png</iconUrl>
