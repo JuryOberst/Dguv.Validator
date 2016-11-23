@@ -26,9 +26,8 @@ Die Bibliothek besteht aus den folgenden Bereichen:
 Diese Bibliothek enthält Funktionen zur Erstellung von Prüffunktionen
 basierend auf Informationen aus dem Internet:
 
-* [Mitgliedsnummern von der DGUV](http://www.dguv.de/de/mediencenter/hintergrund/meldeverfahren/mitgliedsnr/index.jsp)
 * [Anlage 20 der gemeinsamen Rundschreiben](http://www.gkv-datenaustausch.de/arbeitgeber/deuev/gemeinsame_rundschreiben/gemeinsame_rundschreiben.jsp)
-
+* [Mitgliedsnummern von der DGUV](http://www.dguv.de/de/mediencenter/hintergrund/meldeverfahren/mitgliedsnr/index.jsp) (veraltet, die Liste der Mitgliedsnummern wurde von der Web-Seite entfernt)
 
 # Beispiel
 
@@ -51,8 +50,5 @@ if (status != null) {
 
 # Besonderheit
 
-Über die Klasse ```DguvHtmlCheckProvider``` können die Prüfungen aus der aktuellen Tabelle
-von [dieser Web-Seite](http://www.dguv.de/de/mediencenter/hintergrund/meldeverfahren/mitgliedsnr/index.jsp) erstellt werden.
-
-Wenn die Klasse ```GkvAnlage20CheckProvider``` verwendet wird, dann werden die Prüfungen anhand
+Wenn die Klasse `GkvAnlage20CheckProvider` verwendet wird, dann werden die Prüfungen anhand
 einer PDF-Datei der Anlage 20 der [gemeinsamen Rundschreiben](http://www.gkv-datenaustausch.de/arbeitgeber/deuev/gemeinsame_rundschreiben/gemeinsame_rundschreiben.jsp) erstellt.
