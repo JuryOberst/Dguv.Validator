@@ -12,4 +12,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CheckBbnrUvError" xml:space="preserve">
+    <value>A BBNR-UV must be specified.</value>
+  </data>
+  <data name="CheckBbnrUvNameError" xml:space="preserve">
+    <value>A name for a BBNR-UV must be specified.</value>
+  </data>
+  <data name="CheckMaxLengthError" xml:space="preserve">
+    <value>The value of maxLength must be not less than -1 or minLength and must not have a value of 0.</value>
+  </data>
+  <data name="CheckMinLengthError" xml:space="preserve">
+    <value>The value of minLength must be not less than -1.</value>
+  </data>
+  <data name="StatusInvalidBbnrUv" xml:space="preserve">
+    <value>Invalid BBNR-UV</value>
+  </data>
+  <data name="StatusMemberIdInvalidCharacter" xml:space="preserve">
+    <value>The membership number contains one or more invalid characters. Only the following characters are allowed: "{0}"</value>
+  </data>
+  <data name="StatusMemberIdMissing" xml:space="preserve">
+    <value>A membership number must be specified.</value>
+  </data>
+  <data name="StatusMemberIdTooLong" xml:space="preserve">
+    <value>The membership number is too long. She may must not be longer than {0} characters.</value>
+  </data>
+  <data name="StatusMemberIdTooShort" xml:space="preserve">
+    <value>The membership number is too short. She must have a length of at least {0} characters.</value>
+  </data>
 </root>
