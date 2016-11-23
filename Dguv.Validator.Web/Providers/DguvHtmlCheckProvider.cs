@@ -12,6 +12,7 @@ namespace Dguv.Validator.Providers
     /// <summary>
     /// Lädt eine Liste von Prüfungen für Unfallversicherungsträger aus dem Internet.
     /// </summary>
+    [Obsolete("Die Liste der Mitgliedsnummern wurde von der Web-Seite entfernt")]
     public class DguvHtmlCheckProvider : IDguvCheckProvider
     {
         /// <summary>

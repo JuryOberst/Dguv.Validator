@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Dguv.Validator.Providers;
@@ -16,7 +17,8 @@ namespace Dguv.Validator.Tests
             Assert.Equal(71, (await provider.LoadChecks()).Count());
         }
 
-        [Fact]
+        [Fact(Skip = "Die Liste der Mitgliedsnummern wurde von der Web-Seite entfernt")]
+        [Obsolete]
         public async Task TestWebProvider()
         {
             var provider = new DguvHtmlCheckProvider();
