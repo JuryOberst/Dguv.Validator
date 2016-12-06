@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace CreateStaticCheckProviderEntries
                 string validChars;
                 if (check.ValidCharacters.Count == 0)
                 {
-                    validChars = "string.Empty";
+                    validChars = "null";
                 }
                 else
                 {
@@ -58,8 +59,8 @@ namespace CreateStaticCheckProviderEntries
                     "new CharacterMapCheck(\"{0}\", \"{1}\", {2}, {3}, {4})",
                     check.BbnrUv,
                     check.Name.Replace("\"", @"\"""),
-                    check.MinLength,
-                    check.MaxLength,
+                    check.MinLength?.ToString(CultureInfo.InvariantCulture) ?? "null",
+                    check.MaxLength?.ToString(CultureInfo.InvariantCulture) ?? "null",
                     validChars);
 
                 await writer.WriteLineAsync($"                {expression},");

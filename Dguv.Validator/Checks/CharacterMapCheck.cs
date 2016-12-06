@@ -19,7 +19,7 @@ namespace Dguv.Validator.Checks
         /// <param name="bbnrUv">Die Betriebsnummer des Unfallversicherungsträgers</param>
         /// <param name="name">Der Name des Unfallversicherungsträgers</param>
         public CharacterMapCheck(string bbnrUv, string name)
-            : this(bbnrUv, name, -1, -1, null)
+            : this(bbnrUv, name, null, null, null)
         {
         }
 
@@ -28,19 +28,19 @@ namespace Dguv.Validator.Checks
         /// </summary>
         /// <param name="bbnrUv">Die Betriebsnummer des Unfallversicherungsträgers</param>
         /// <param name="name">Der Name des Unfallversicherungsträgers</param>
-        /// <param name="minLength">Die minimale Länge der Mitgliedsnummer (oder -1, wenn nicht geprüft werden soll)</param>
-        /// <param name="maxLength">Die maximale Länge der Mitgliedsnummer (oder -1, wenn nicht geprüft werden soll)</param>
+        /// <param name="minLength">Die minimale Länge der Mitgliedsnummer (oder <code>null</code>, wenn nicht geprüft werden soll)</param>
+        /// <param name="maxLength">Die maximale Länge der Mitgliedsnummer (oder <code>null</code>, wenn nicht geprüft werden soll)</param>
         /// <param name="validCharacters">Die Zeichen, die eine Mitgliedsnummer haben darf (oder null/Empty, wenn nicht geprüft werden soll)</param>
-        public CharacterMapCheck(string bbnrUv, string name, int minLength, int maxLength, string validCharacters)
+        public CharacterMapCheck(string bbnrUv, string name, int? minLength, int? maxLength, string validCharacters)
         {
-            if (minLength < -1)
-                throw new ArgumentOutOfRangeException("minLength", Resources.CheckMinLengthError);
-            if (maxLength < -1 || maxLength < minLength || maxLength == 0)
-                throw new ArgumentOutOfRangeException("maxLength", Resources.CheckMaxLengthError);
+            if (minLength != null && minLength < 1)
+                throw new ArgumentOutOfRangeException(nameof(minLength), Resources.CheckMinLengthError);
+            if (maxLength != null && (maxLength < 1 || (minLength != null && maxLength < minLength)))
+                throw new ArgumentOutOfRangeException(nameof(maxLength), Resources.CheckMaxLengthError);
             if (string.IsNullOrWhiteSpace(bbnrUv))
-                throw new ArgumentOutOfRangeException("bbnrUv", Resources.CheckBbnrUvError);
+                throw new ArgumentOutOfRangeException(nameof(bbnrUv), Resources.CheckBbnrUvError);
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentOutOfRangeException("name", Resources.CheckBbnrUvNameError);
+                throw new ArgumentOutOfRangeException(nameof(name), Resources.CheckBbnrUvNameError);
 
             BbnrUv = bbnrUv;
             Name = name;
@@ -53,35 +53,32 @@ namespace Dguv.Validator.Checks
         /// <summary>
         /// Holt die Betriebsnummer des Unfallversicherungsträgers
         /// </summary>
-        public string BbnrUv { get; private set; }
+        public string BbnrUv { get; }
 
         /// <summary>
         /// Holt den Namen des Unfallversicherungsträgers
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; }
 
         /// <summary>
         /// Holt die minimale Länge der Mitgliedsnummer
         /// </summary>
-        public int MinLength { get; private set; }
+        public int? MinLength { get; }
 
         /// <summary>
         /// Holt die maximale Länge der Mitgliedsnummer
         /// </summary>
-        public int MaxLength { get; private set; }
+        public int? MaxLength { get; }
 
         /// <summary>
         /// Holt ein Set mit allen gültigen Zeichen einer Mitgliedsnummer
         /// </summary>
-        public ISet<char> ValidCharacters { get; private set; }
+        public ISet<char> ValidCharacters { get; }
 
         /// <summary>
         /// Holt einen Wert, der angibt, ob eine Überprüfung erforderlich ist
         /// </summary>
-        public bool IsValidationRequired
-        {
-            get { return MinLength != -1 || MaxLength != -1 || (ValidCharacters != null && ValidCharacters.Count != 0); }
-        }
+        public bool IsValidationRequired => MinLength != null || MaxLength != null || (ValidCharacters != null && ValidCharacters.Count != 0);
 
         /// <summary>
         /// Prüft, ob die Mitgliedsnummer für den Unfallversicherungsträger gültig ist.
@@ -105,9 +102,9 @@ namespace Dguv.Validator.Checks
                 return null;
             if (string.IsNullOrEmpty(memberId))
                 return Resources.StatusMemberIdMissing;
-            if (MinLength != -1 && memberId.Length < MinLength)
+            if (MinLength != null && memberId.Length < MinLength)
                 return string.Format(Resources.StatusMemberIdTooShort, MinLength);
-            if (MaxLength != -1 && memberId.Length > MaxLength)
+            if (MaxLength != null && memberId.Length > MaxLength)
                 return string.Format(Resources.StatusMemberIdTooLong, MaxLength);
             if (ValidCharacters == null || ValidCharacters.Count == 0)
                 return null;

@@ -19,10 +19,10 @@
     <value>A name for a BBNR-UV must be specified.</value>
   </data>
   <data name="CheckMaxLengthError" xml:space="preserve">
-    <value>The value of maxLength must be not less than -1 or minLength and must not have a value of 0.</value>
+    <value>The value of maxLength must be not less than 1 or minLength.</value>
   </data>
   <data name="CheckMinLengthError" xml:space="preserve">
-    <value>The value of minLength must be not less than -1.</value>
+    <value>The value of minLength must be not less than 1.</value>
   </data>
   <data name="StatusInvalidBbnrUv" xml:space="preserve">
     <value>Invalid BBNR-UV</value>

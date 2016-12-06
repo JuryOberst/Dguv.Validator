@@ -35,8 +35,8 @@ namespace Dguv.Validator
         /// <returns>das neue <see cref="CharacterMapCheck"/>-Objekt</returns>
         public static CharacterMapCheck CreateCharacterMapCheck(string bbnrUv, string name, string minLength, string maxLength, string validCharsList)
         {
-            var minLengthAsInt = _isNumber.IsMatch(minLength) ? Convert.ToInt32(minLength, 10) : -1;
-            var maxLengthAsInt = _isNumber.IsMatch(maxLength) ? Convert.ToInt32(maxLength, 10) : -1;
+            var minLengthAsInt = _isNumber.IsMatch(minLength) ? Convert.ToInt32(minLength, 10) : (int?)null;
+            var maxLengthAsInt = _isNumber.IsMatch(maxLength) ? Convert.ToInt32(maxLength, 10) : (int?)null;
             var validChars = ParseValidChars(validCharsList.Trim());
             return new CharacterMapCheck(bbnrUv, name, minLengthAsInt, maxLengthAsInt, validChars);
         }

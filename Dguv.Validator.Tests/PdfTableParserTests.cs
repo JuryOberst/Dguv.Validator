@@ -52,8 +52,8 @@ namespace Dguv.Validator.Tests
             var check = Assert.IsType<CharacterMapCheck>(item);
             Assert.Equal("01627953", check.BbnrUv);
             Assert.Equal("Hanseatische Feuerwehr-Unfallkasse Nord", check.Name);
-            Assert.Equal(-1, check.MinLength);
-            Assert.Equal(-1, check.MaxLength);
+            Assert.Equal(null, check.MinLength);
+            Assert.Equal(null, check.MaxLength);
             Assert.Equal(0, check.ValidCharacters.Count);
         }
 

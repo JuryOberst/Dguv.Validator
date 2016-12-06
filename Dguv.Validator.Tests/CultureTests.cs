@@ -13,14 +13,14 @@ namespace Dguv.Validator.Tests
         [Theory]
         [InlineData(
             "de",
-            "Der Wert von minLength darf nicht kleiner als -1 sein.",
-            "Der Wert von maxLength darf nicht kleiner als -1 oder minLength sein und darf nicht den Wert 0 haben.",
+            "Der Wert von minLength darf nicht kleiner als 1 sein.",
+            "Der Wert von maxLength darf nicht kleiner als 1 oder minLength sein.",
             "Es muss eine BBNR-UV angegeben werden.",
             "Es muss ein Name für eine BBNR-UV angegeben werden.")]
         [InlineData(
             "en",
-            "The value of minLength must be not less than -1.",
-            "The value of maxLength must be not less than -1 or minLength and must not have a value of 0.",
+            "The value of minLength must be not less than 1.",
+            "The value of maxLength must be not less than 1 or minLength.",
             "A BBNR-UV must be specified.",
             "A name for a BBNR-UV must be specified.")]
         public void TestCharacterMapCheckExceptions(
@@ -49,9 +49,6 @@ namespace Dguv.Validator.Tests
                 Assert.Equal(
                     errorMessageMaxLength,
                     Assert.Throws<ArgumentOutOfRangeException>("maxLength", () => new CharacterMapCheck(bbnrUv, bbnrUvName, minLength, minLength - 1, validCharacters)).GetFirstLine());
-                Assert.Equal(
-                    errorMessageMaxLength,
-                    Assert.Throws<ArgumentOutOfRangeException>("maxLength", () => new CharacterMapCheck(bbnrUv, bbnrUvName, minLength, -1, validCharacters)).GetFirstLine());
                 Assert.Equal(
                     errorMessageBbnrUv,
                     Assert.Throws<ArgumentOutOfRangeException>("bbnrUv", () => new CharacterMapCheck(string.Empty, bbnrUvName, minLength, maxLength, validCharacters)).GetFirstLine());

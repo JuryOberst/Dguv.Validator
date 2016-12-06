@@ -15,12 +15,12 @@
           <target state="final">A name for a BBNR-UV must be specified.</target>
         </trans-unit>
         <trans-unit id="CheckMaxLengthError" translate="yes" xml:space="preserve">
-          <source>Der Wert von maxLength darf nicht kleiner als -1 oder minLength sein und darf nicht den Wert 0 haben.</source>
-          <target state="final">The value of maxLength must be not less than -1 or minLength and must not have a value of 0.</target>
+          <source>Der Wert von maxLength darf nicht kleiner als 1 oder minLength sein.</source>
+          <target state="final">The value of maxLength must be not less than 1 or minLength.</target>
         </trans-unit>
         <trans-unit id="CheckMinLengthError" translate="yes" xml:space="preserve">
-          <source>Der Wert von minLength darf nicht kleiner als -1 sein.</source>
-          <target state="final">The value of minLength must be not less than -1.</target>
+          <source>Der Wert von minLength darf nicht kleiner als 1 sein.</source>
+          <target state="final">The value of minLength must be not less than 1.</target>
         </trans-unit>
         <trans-unit id="StatusInvalidBbnrUv" translate="yes" xml:space="preserve">
           <source>Ungültige BBNR-UV</source>
