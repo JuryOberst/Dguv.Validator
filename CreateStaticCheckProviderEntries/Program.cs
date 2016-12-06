@@ -1,20 +1,43 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Dguv.Validator.Checks;
 using Dguv.Validator.Providers;
 
+using Microsoft.Extensions.CommandLineUtils;
+
 namespace CreateStaticCheckProviderEntries
 {
     internal class Program
     {
-        private static void Main()
+        private static void Main(string[] args)
         {
-            Execute().Wait();
+            var app = new CommandLineApplication()
+            {
+                Name = Path.GetFileNameWithoutExtension(Environment.GetCommandLineArgs()[0]),
+                Description = "Erstellung eines C#-Quelltext-Fragments anhand der Anlage 20",
+            };
+            app.HelpOption("-h|--help|-?");
+            app.OptionHelp.Description = "Zeigt die Hilfe";
+            var outputOption = app.Option("-o|--output", "Ausgabe-Datei", CommandOptionType.SingleValue);
+            app.OnExecute(async () =>
+            {
+                if (outputOption.HasValue())
+                {
+                    using (var writer = new StreamWriter(outputOption.Value()))
+                    {
+                        return await Execute(writer);
+                    }
+                }
+
+                return await Execute(Console.Out);
+            });
+            app.Execute(args);
         }
 
-        private static async Task Execute()
+        private static async Task<int> Execute(TextWriter writer)
         {
             var provider = new GkvAnlage20CheckProvider();
             foreach (var check in (await provider.LoadChecks()).Cast<CharacterMapCheck>().OrderBy(x => x.BbnrUv))
@@ -39,8 +62,10 @@ namespace CreateStaticCheckProviderEntries
                     check.MaxLength,
                     validChars);
 
-                Console.WriteLine(@"{1}{0},", expression, @"                ");
+                await writer.WriteLineAsync($"                {expression},");
             }
+
+            return 0;
         }
     }
 }
