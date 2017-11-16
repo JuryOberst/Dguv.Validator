@@ -1,4 +1,8 @@
-﻿using System;
+﻿// <copyright file="DguvValidationException.cs" company="DATALINE GmbH &amp; Co. KG">
+// Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
+// </copyright>
+
+using System;
 
 namespace Dguv.Validator
 {

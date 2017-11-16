@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="DguvValidator.cs" company="DATALINE GmbH &amp; Co. KG">
+// Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
+// </copyright>
+
+using System.Collections.Generic;
 using System.Linq;
 
 using Dguv.Validator.Properties;
