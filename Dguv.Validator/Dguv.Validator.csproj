@@ -46,8 +46,10 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Checks\CharacterMapCheck.cs" />
+    <Compile Include="Checks\CharacterMapCheckFormat.cs" />
     <Compile Include="DguvValidationException.cs" />
     <Compile Include="DguvValidator.cs" />
+    <Compile Include="ICheckNumberValidator.cs" />
     <Compile Include="IDguvCheckProvider.cs" />
     <Compile Include="IDguvNumberCheck.cs" />
     <Compile Include="IDguvValidator.cs" />
