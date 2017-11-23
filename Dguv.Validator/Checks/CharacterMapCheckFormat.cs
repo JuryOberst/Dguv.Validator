@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Dguv.Validator.Properties;
+﻿// <copyright file="CharacterMapCheckFormat.cs" company="DATALINE GmbH &amp; Co. KG">
+// Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
+// </copyright>
+using System;
 using System.Text.RegularExpressions;
+using Dguv.Validator.Properties;
 
 namespace Dguv.Validator.Checks
 {
@@ -35,9 +35,9 @@ namespace Dguv.Validator.Checks
                 throw new ArgumentOutOfRangeException(nameof(bbnrUv), Resources.CheckBbnrUvError);
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentOutOfRangeException(nameof(name), Resources.CheckBbnrUvNameError);
-            //if (patterns != null && patterns.Length == 0)
-            //    throw new ArgumentOutOfRangeException(nameof(patterns) /* TODO: Resources mit der entsprechnenden Fehlermeldung erweitern, sobald Mark die MultilungualResources angepasst hat */);
 
+            // if (patterns != null && patterns.Length == 0)
+            //    throw new ArgumentOutOfRangeException(nameof(patterns) /* TODO: Resources mit der entsprechnenden Fehlermeldung erweitern, sobald Mark die MultilungualResources angepasst hat */);
             BbnrUv = bbnrUv;
             Name = name;
             Patterns = patterns;
@@ -91,9 +91,9 @@ namespace Dguv.Validator.Checks
                 return null;
             if (string.IsNullOrEmpty(memberId))
                 return Resources.StatusMemberIdMissing;
-            if (Patterns != null && !checkWithPatterns(memberId))
+            if (Patterns != null && !CheckWithPatterns(memberId))
                 return "Fehler im  Aufbau der Mitgliesnummer" /* TODO: Resources.StatusMemberIdInvalidStructure */;
-            if (CheckNumberValidator != null && !checkCheckNumber(memberId))
+            if (CheckNumberValidator != null && !CheckCheckNumber(memberId))
                 return "Die Prüfziffer scheint nicht korrekt zu sein." /* TODO: Resources.StatusMemberIdInvalidChecknumber */ ;
             return null;
         }
@@ -103,37 +103,40 @@ namespace Dguv.Validator.Checks
         /// </summary>
         /// <param name="memberId">Die zu prüfenden Mitgliedsnummer</param>
         /// <returns><code>TRUE</code>, wenn mindestens eines der Muster passt</returns>
-        private bool checkWithPatterns(string memberId)
+        private bool CheckWithPatterns(string memberId)
         {
             // Wenn keine Formate vorhanden sind, dann können/müssen die Eingaben nicht geprüft werden
             if (Patterns.Length == 0)
                 return true;
+
             // Gehe durch die Liste der Muster und prüfe ob die Eingaben auf eines der Muster zutreffen
-            foreach(var pat in Patterns)
+            foreach (var pat in Patterns)
             {
                 if (Regex.IsMatch(memberId, pat))
-                    // Wenn die Eingaben auf mindestens eines der Muster treffen, dann kann die Prüfung 
+
+                    // Wenn die Eingaben auf mindestens eines der Muster treffen, dann kann die Prüfung
                     // erfolgreich abgeschlossen werden, weitere Muster müssen nicht mehr geprüft werden
                     return true;
             }
             return false;
         }
 
-
         /// <summary>
         /// Prüft, ob die Mitgliedsnummer den korrekten Aufbau hat
         /// </summary>
         /// <param name="memberId">Die zu prüfenden Mitgliedsnummer</param>
         /// <returns><code>TRUE</code>, wenn mindestens eines der Muster passt</returns>
-        private bool checkCheckNumber(string memberId)
+        private bool CheckCheckNumber(string memberId)
         {
             // Wenn keine Formate vorhanden sind, dann können/müssen die Eingaben nicht geprüft werden
             if (CheckNumberValidator.Length == 0)
                 return true;
+
             // Gehe durch die Liste der Muster und prüfe ob die Eingaben auf eines der Muster zutreffen
             foreach (var check in CheckNumberValidator)
             {
                 if (check.Validate(memberId))
+
                     // Wenn die Eingaben auf mindestens eines der Muster treffen, dann kann die Prüfung 
                     // erfolgreich abgeschlossen werden, weitere Muster müssen nicht mehr geprüft werden
                     return true;

@@ -1,4 +1,8 @@
-﻿namespace Dguv.Validator
+﻿// <copyright file="IDguvNumberCheck.cs" company="DATALINE GmbH &amp; Co. KG">
+// Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
+// </copyright>
+
+namespace Dguv.Validator
 {
     /// <summary>
     /// Schnittstelle für ein Prüfverfahren für einen Unfallversicherungsträger

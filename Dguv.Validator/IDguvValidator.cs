@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿// <copyright file="IDguvValidator.cs" company="DATALINE GmbH &amp; Co. KG">
+// Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
+// </copyright>
+
+using System.Threading.Tasks;
 
 namespace Dguv.Validator
 {

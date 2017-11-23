@@ -39,7 +39,7 @@ namespace Dguv.Validator.Format.Providers
             //Eventuel sollte man die Textdatei auf einen Server legen und diese von dort laden.
             using (FileStream fs = File.Open("Data/uv171001_v4.txt", FileMode.Open, FileAccess.Read))
             {
-                using(BufferedStream bs = new BufferedStream(fs))
+                using (BufferedStream bs = new BufferedStream(fs))
                 {
                     using (var streamReader = new StreamReader(bs))
                     {
@@ -61,8 +61,7 @@ namespace Dguv.Validator.Format.Providers
 
                             if(bnr != string.Empty && name != string.Empty)
                             {
-                                ICheckNumberValidator[] checkers = null;
-                                checkNumberValidators.TryGetValue(bnr, out checkers);
+                                checkNumberValidators.TryGetValue(bnr, out ICheckNumberValidator[] checkers);
                                 checks.Add(new Dguv.Validator.Checks.CharacterMapCheckFormat(bnr, name, patterns, checkers));
                             }
                                 

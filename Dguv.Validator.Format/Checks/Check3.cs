@@ -12,7 +12,7 @@ namespace Dguv.Validator.Format.Checks
             string calculatedCheckNumber = String.Empty;
             bool oldAlgorithmus = false, newSummaryAlgorithmus = false;
             string firstChar = membershipNumber.ToUpper().Substring(0, 1);
-            int[] mgnr_numbers = Array.ConvertAll(membershipNumber.Substring(1, 6).ToCharArray(), c => (int)Char.GetNumericValue(c));
+            int[] mgnr_numbers = Array.ConvertAll(membershipNumber.Substring(1, 6).ToCharArray(), c => (int)char.GetNumericValue(c));
 
             if (firstChar == "M")
             {

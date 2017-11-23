@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file="DguvValidator.cs" company="DATALINE GmbH &amp; Co. KG">
+// Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
+// </copyright>
+
+using System.Collections.Generic;
 using System.Linq;
 
 using Dguv.Validator.Properties;
@@ -56,8 +60,7 @@ namespace Dguv.Validator
         /// <returns>Die Fehlermeldung oder null, wenn kein Fehler aufgetreten ist.</returns>
         public string GetStatus(string bbnrUv, string memberId)
         {
-            IDguvNumberCheck check;
-            if (!_checks.TryGetValue(bbnrUv, out check))
+            if (!_checks.TryGetValue(bbnrUv, out IDguvNumberCheck check))
                 return Resources.StatusInvalidBbnrUv;
             return check.GetStatus(memberId);
         }

@@ -13,7 +13,7 @@ namespace Dguv.Validator.Format.Checks
             if(membershipNumber.Substring(1, 1) == "/")
                 trimmed = membershipNumber.Substring(2, membershipNumber.Length - 2).Trim();
 
-            var mgnr_number = Array.ConvertAll(trimmed.ToCharArray(), c => (int)Char.GetNumericValue(c));
+            var mgnr_number = Array.ConvertAll(trimmed.ToCharArray(), c => (int)char.GetNumericValue(c));
             
             if(trimmed.Length >= 8)
             {
