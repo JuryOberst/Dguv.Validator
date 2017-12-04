@@ -1,15 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// <copyright file="Check3.cs" company="DATALINE GmbH &amp; Co. KG">
+// Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
+// </copyright>
+using System;
 
 namespace Dguv.Validator.Format.Checks
 {
+    /// <summary>
+    /// Prüfziffernberechnung 3
+    /// </summary>
     public class Check3 : ICheckNumberValidator
     {
+        /// <summary>
+        /// Berechnung der Prüfziffer anhand der Mitgliedsnummer
+        /// </summary>
+        /// <param name="membershipNumber">Die Mitgliedsnummer</param>
+        /// <returns>Die errechnete Prüfziffer</returns>
         public object Calculate(string membershipNumber)
         {
             int p1 = 0, p2 = 0, sum = 0, prz = 0;
-            string calculatedCheckNumber = String.Empty;
+            string calculatedCheckNumber = string.Empty;
             bool oldAlgorithmus = false, newSummaryAlgorithmus = false;
             string firstChar = membershipNumber.ToUpper().Substring(0, 1);
             int[] mgnr_numbers = Array.ConvertAll(membershipNumber.Substring(1, 6).ToCharArray(), c => (int)char.GetNumericValue(c));
@@ -19,10 +28,10 @@ namespace Dguv.Validator.Format.Checks
                 p1 = 13;
                 oldAlgorithmus = true;
             }
-            if(firstChar == "S")
+            if (firstChar == "S")
             {
                 p1 = 13;
-                if(Convert.ToUInt16($"{mgnr_numbers[0]}{mgnr_numbers[1]}") <= 23)
+                if (Convert.ToUInt16($"{mgnr_numbers[0]}{mgnr_numbers[1]}") <= 23)
                 {
                     oldAlgorithmus = true;
                 }
@@ -30,13 +39,13 @@ namespace Dguv.Validator.Format.Checks
 
             if (oldAlgorithmus)
             {
-                sum = 2 * p1 +
-                    7 * Convert.ToUInt16(mgnr_numbers[0]) +
-                    6 * Convert.ToUInt16(mgnr_numbers[1]) +
-                    5 * Convert.ToUInt16(mgnr_numbers[2]) +
-                    4 * Convert.ToUInt16(mgnr_numbers[3]) +
-                    3 * Convert.ToUInt16(mgnr_numbers[4]) +
-                    2 * Convert.ToUInt16(mgnr_numbers[5]);
+                sum = (2 * p1) +
+                    (7 * Convert.ToUInt16(mgnr_numbers[0])) +
+                    (6 * Convert.ToUInt16(mgnr_numbers[1])) +
+                    (5 * Convert.ToUInt16(mgnr_numbers[2])) +
+                    (4 * Convert.ToUInt16(mgnr_numbers[3])) +
+                    (3 * Convert.ToUInt16(mgnr_numbers[4])) +
+                    (2 * Convert.ToUInt16(mgnr_numbers[5]));
 
                 prz = sum > 0 ? 11 - (sum % 11) : 0;
 
@@ -79,13 +88,13 @@ namespace Dguv.Validator.Format.Checks
             }
             else
             {
-                if(firstChar[0] == 'A')
+                if (firstChar[0] == 'A')
                 {
                     p2 = 1;
                     newSummaryAlgorithmus = true;
                 }
 
-                if(firstChar[0] == 'F' && mgnr_numbers[0] == 9)
+                if (firstChar[0] == 'F' && mgnr_numbers[0] == 9)
                 {
                     p2 = 6;
                     newSummaryAlgorithmus = true;
@@ -93,13 +102,13 @@ namespace Dguv.Validator.Format.Checks
 
                 if (newSummaryAlgorithmus)
                     sum = 2 * p2;
-                
-                sum += 7 * mgnr_numbers[0] +
-                    6 * mgnr_numbers[1] +
-                    5 * mgnr_numbers[2] +
-                    4 * mgnr_numbers[3] +
-                    3 * mgnr_numbers[4] +
-                    2 * mgnr_numbers[5];
+
+                sum += (7 * mgnr_numbers[0]) +
+                    (6 * mgnr_numbers[1]) +
+                    (5 * mgnr_numbers[2]) +
+                    (4 * mgnr_numbers[3]) +
+                    (3 * mgnr_numbers[4]) +
+                    (2 * mgnr_numbers[5]);
 
                 if (sum > 0)
                 {
@@ -145,6 +154,11 @@ namespace Dguv.Validator.Format.Checks
             return calculatedCheckNumber;
         }
 
+        /// <summary>
+        /// Validierung der Prüfziffer in einer Mitgliedsnummer
+        /// </summary>
+        /// <param name="membershipNumber">Die Mitgliedsnummmer</param>
+        /// <returns><code>TRUE</code>, wenn die errechnete und die in der Mitgliedsnummer enthaltene Prüfziffer gleich ist. Sonst <code>FALSE</code></returns>
         public bool Validate(string membershipNumber)
         {
             var originChecknumber = ExtractCheckNumber(membershipNumber);

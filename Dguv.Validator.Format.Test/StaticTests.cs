@@ -4,7 +4,9 @@ using System.Linq;
 using Xunit;
 using Dguv.Validator.Format.Providers;
 using System.Diagnostics;
+using System.Linq;
 using Xunit.Abstractions;
+using System.Collections.Generic;
 
 namespace Dguv.Validator.Format.Test
 {   
@@ -16,6 +18,11 @@ namespace Dguv.Validator.Format.Test
         public StaticTest(ITestOutputHelper output)
         {
             this.output = output;
+        }
+                
+        public void Init()
+        {
+
         }
 
         [Fact]
@@ -46,6 +53,27 @@ namespace Dguv.Validator.Format.Test
             output.WriteLine(status);
             Assert.False(check.IsValid(mitgliedsnummer));
         }
+
+
+        //public async Task TestGenaeral()
+        //{
+        //    var generated = new Dictionary<string, string[]>();
+        //    var checks = await new DguvTextCheckProvider().LoadChecks();
+        //    foreach(var check in checks)
+        //    {
+        //        foreach(string pattern in check.Patter)
+        //        {
+        //            string[] membershipNumbers = null;
+        //            generated.TryGetValue(check.BbnrUv, out membershipNumbers);
+        //            if (membershipNumbers == null)
+        //                membershipNumbers = new string[] { };
+        //            var membershipNumber = new Fare.RegExp(pattern).ToString();
+        //            membershipNumbers.Append(membershipNumber);
+
+        //        }
+        //    }
+        //}
+
 
     }
 }

@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace Dguv.Validator.Format
 {
     internal static class FormatParser
-    {        
-        internal static string[] parseFormat(string format)
+    {
+        internal static string[] ParseFormat(string format)
         {
             List<string> regExPatterns = new List<string>();
             if (format != string.Empty)
             {
-                // Trennen der einzelnen Formate falls mehrere vorhanden sind 
+                // Trennen der einzelnen Formate falls mehrere vorhanden sind
                 string[] splitted = format.Split(':');
                 foreach (var split in splitted)
                 {
                     StringBuilder builder = new StringBuilder();
                     builder.Append("^");
-                    string part = String.Empty;
+                    string part = string.Empty;
                     var enumerator = split.GetEnumerator();
                     enumerator.MoveNext();
                     int charCount = 0;
