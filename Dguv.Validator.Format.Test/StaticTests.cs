@@ -1,15 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Linq;
 using Xunit;
 using Dguv.Validator.Format.Providers;
-using System.Diagnostics;
-using System.Linq;
 using Xunit.Abstractions;
-using System.Collections.Generic;
+using Dguv.Validator.Checks;
+using Fare;
 
 namespace Dguv.Validator.Format.Test
-{   
+{
     public class StaticTest
     {
 
@@ -18,12 +16,7 @@ namespace Dguv.Validator.Format.Test
         public StaticTest(ITestOutputHelper output)
         {
             this.output = output;
-        }
-                
-        public void Init()
-        {
-
-        }
+        }       
 
         [Fact]
         public async Task TestTextProvider()
@@ -54,26 +47,19 @@ namespace Dguv.Validator.Format.Test
             Assert.False(check.IsValid(mitgliedsnummer));
         }
 
+        [Fact]
+        public async Task TestFormat()
+        {
+            var checks = await new DguvTextCheckProvider().LoadChecks();
+            foreach (CharacterMapCheckFormat check in checks)
+            {
+                foreach (string pattern in check.Patterns)
+                {
+                    var membershipNumber = new Xeger(pattern).Generate();
 
-        //public async Task TestGenaeral()
-        //{
-        //    var generated = new Dictionary<string, string[]>();
-        //    var checks = await new DguvTextCheckProvider().LoadChecks();
-        //    foreach(var check in checks)
-        //    {
-        //        foreach(string pattern in check.Patter)
-        //        {
-        //            string[] membershipNumbers = null;
-        //            generated.TryGetValue(check.BbnrUv, out membershipNumbers);
-        //            if (membershipNumbers == null)
-        //                membershipNumbers = new string[] { };
-        //            var membershipNumber = new Fare.RegExp(pattern).ToString();
-        //            membershipNumbers.Append(membershipNumber);
-
-        //        }
-        //    }
-        //}
-
-
+                    Assert.True(check.CheckWithPatterns(membershipNumber));
+                }
+            }
+        }
     }
 }

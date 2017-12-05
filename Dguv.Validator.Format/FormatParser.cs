@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Dguv.Validator.Format
@@ -8,6 +9,7 @@ namespace Dguv.Validator.Format
         internal static string[] ParseFormat(string format)
         {
             List<string> regExPatterns = new List<string>();
+            var chars = new char[] { '(', ')' };
             if (format != string.Empty)
             {
                 // Trennen der einzelnen Formate falls mehrere vorhanden sind
@@ -24,7 +26,7 @@ namespace Dguv.Validator.Format
                     do
                     {
 
-                        if (lastChar != enumerator.Current || enumerator.Current == ')')
+                        if (lastChar != enumerator.Current || chars.Contains(enumerator.Current))
                         {
                             builder.Append(part);
                             if (charCount > 1)
@@ -42,10 +44,19 @@ namespace Dguv.Validator.Format
                                 part = "[0-9a-zA-Z]";
                                 break;
                             case ' ':
-                                part = @"\s";
+                                part = @" ";
                                 break;
                             case '.':
                                 part = @"\.";
+                                break;
+                            case ',':
+                                part = @"\,";
+                                break;
+                            case '[':
+                                part = @"(";
+                                break;
+                            case ']':
+                                part = @")";
                                 break;
                             case ')':
                                 part = $"{enumerator.Current.ToString()}?";

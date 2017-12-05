@@ -4,6 +4,7 @@
 
 using System.Reflection;
 using System.Resources;
+using System.Runtime.CompilerServices;
 
 // Allgemeine Informationen über eine Assembly werden über folgende
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
@@ -15,7 +16,7 @@ using System.Resources;
 //// [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("de")]
-
+[assembly: InternalsVisibleTo("Dguv.Validator.Format.Test")]
 // Versionsinformationen für eine Assembly bestehen aus den folgenden vier Werten:
 //
 //      Hauptversion

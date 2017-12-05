@@ -92,9 +92,9 @@ namespace Dguv.Validator.Checks
             if (string.IsNullOrEmpty(memberId))
                 return Resources.StatusMemberIdMissing;
             if (Patterns != null && !CheckWithPatterns(memberId))
-                return "Fehler im  Aufbau der Mitgliesnummer" /* TODO: Resources.StatusMemberIdInvalidStructure */;
+                return Resources.StatusMemberIdInvalidStructure;
             if (CheckNumberValidator != null && !CheckCheckNumber(memberId))
-                return "Die Prüfziffer scheint nicht korrekt zu sein." /* TODO: Resources.StatusMemberIdInvalidChecknumber */ ;
+                return Resources.StatusMemberIdInvalidChecknumber;
             return null;
         }
 
@@ -103,7 +103,7 @@ namespace Dguv.Validator.Checks
         /// </summary>
         /// <param name="memberId">Die zu prüfenden Mitgliedsnummer</param>
         /// <returns><code>TRUE</code>, wenn mindestens eines der Muster passt</returns>
-        private bool CheckWithPatterns(string memberId)
+        internal bool CheckWithPatterns(string memberId)
         {
             // Wenn keine Formate vorhanden sind, dann können/müssen die Eingaben nicht geprüft werden
             if (Patterns.Length == 0)
