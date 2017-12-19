@@ -5,7 +5,8 @@
 *.suo
 *.user
 *.sln.docstates
-
+# IDE-specific directories
+.vs/
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

@@ -135,6 +135,12 @@
   <data name="StatusMemberIdInvalidCharacter" xml:space="preserve">
     <value>Die Mitgliedsnummer enthält ein oder mehrere ungültige Zeichen. Erlaubt sind nur folgende Zeichen: "{0}"</value>
   </data>
+  <data name="StatusMemberIdInvalidChecknumber" xml:space="preserve">
+    <value>Die Prüfziffer scheint nicht korrekt zu sein.</value>
+  </data>
+  <data name="StatusMemberIdInvalidStructure" xml:space="preserve">
+    <value>Fehler im Aufbau der Mitgliedsnummer.</value>
+  </data>
   <data name="StatusMemberIdMissing" xml:space="preserve">
     <value>Es muss eine Mitgliedsnummer angegeben werden.</value>
   </data>

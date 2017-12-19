@@ -2,6 +2,8 @@
 // Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
 // </copyright>
 
+using System.Collections.Generic;
+
 namespace Dguv.Validator
 {
     /// <summary>
