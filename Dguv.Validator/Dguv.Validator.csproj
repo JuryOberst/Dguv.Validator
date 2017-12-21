@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.1</TargetFrameworks> 
+    <TargetFrameworks>netstandard1.1;net45</TargetFrameworks> 
     <CodeAnalysisRuleSet>..\Dataline.ruleset</CodeAnalysisRuleSet> 
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute> 
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute> 
@@ -49,7 +49,7 @@
   <ItemGroup>
     <XliffResource Include="MultilingualResources\Dguv.Validator.en.xlf" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -57,6 +57,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
+  
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.en.resx">
       <Generator>ResXFileCodeGenerator</Generator>

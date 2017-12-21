@@ -34,7 +34,7 @@ namespace Dguv.Validator.Format.Providers
            { "87661183", new ICheckNumberValidator[] { new Checks.Check15(), new Checks.Check17() } }
         };
 
-        private static IEnumerable<IDguvNumberCheck> _checks;
+        private readonly IEnumerable<IDguvNumberCheck> _checks;
 
         /// <summary>
         /// Konstruktor
@@ -50,26 +50,30 @@ namespace Dguv.Validator.Format.Providers
                 {
                     using (var streamReader = new StreamReader(bs))
                     {
-                        string line = string.Empty, bnr, name, format;
+                        string line = string.Empty, bnr, name, format, validCharacters;
 
                         while (!streamReader.EndOfStream)
                         {
                             bnr = string.Empty;
                             name = string.Empty;
+                            validCharacters = string.Empty;
                             format = string.Empty;
                             line = streamReader.ReadLine();
                             if (line.Length >= 28)
                                 bnr = line.Substring(27, Math.Min(15, line.Length - 27)).Trim();
                             if (line.Length >= 57)
                                 name = line.Substring(56, Math.Min(35, line.Length - 56)).TrimStart().TrimEnd();
+                            if (line.Length >= 288)
+                                validCharacters = line.Substring(287, Math.Min(55, line.Length - 287)).TrimStart().TrimEnd();
                             if (line.Length >= 343)
                                 format = line.Substring(342, Math.Min(100, line.Length - 342)).TrimStart().TrimEnd();
-                            string[] patterns = FormatParser.ParseFormat(format);
+
+                            var result = FormatParser.ParseFormat(format);
 
                             if (bnr != string.Empty && name != string.Empty)
                             {
                                 _checkNumberValidators.TryGetValue(bnr, out ICheckNumberValidator[] checkers);
-                                checks.Add(new Dguv.Validator.Checks.CharacterMapCheckFormat(bnr, name, patterns, checkers));
+                                checks.Add(new Dguv.Validator.Checks.CharacterMapCheckFormat(bnr, name, result.Item1, result.Item2, validCharacters, result.Item3, checkers));
                             }
                         }
                     }
