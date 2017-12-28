@@ -1,26 +1,27 @@
 ﻿// <copyright file="Check14.cs" company="DATALINE GmbH &amp; Co. KG">
 // Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
 // </copyright>
-using System;
+
+using System.Globalization;
+using System.Linq;
 
 namespace Dguv.Validator.Format.Checks
 {
     /// <summary>
     /// Prüfziffernberechnung 14
     /// </summary>
-    public class Check14 : ICheckNumberValidator
+    public class Check14 : IDguvChecksumHandler
     {
-        /// <summary>
-        /// Berechnung der Prüfziffer anhand der Mitgliedsnummer
-        /// </summary>
-        /// <param name="membershipNumber">Die Mitgliedsnummer</param>
-        /// <returns>Die errechnete Prüfziffer</returns>
-        public object Calculate(string membershipNumber)
+        /// <inheritdoc />
+        public int Id => 14;
+
+        /// <inheritdoc />
+        public string[] Calculate(string membershipNumber)
         {
             int calculatedCheckNumber = 0, sum = 0;
-            string trimmed = membershipNumber.Trim();
+            string trimmed = membershipNumber.ExtractDigits();
 
-            var mgnr_numbers = Array.ConvertAll(trimmed.Substring(0, trimmed.Length - 1).ToCharArray(), c => (int)char.GetNumericValue(c));
+            var mgnr_numbers = trimmed.Substring(0, trimmed.Length - 1).ToCharArray().Select(c => (int)char.GetNumericValue(c)).ToArray();
 
             if (mgnr_numbers.Length == 7)
             {
@@ -36,25 +37,7 @@ namespace Dguv.Validator.Format.Checks
             calculatedCheckNumber = sum % 11;
             calculatedCheckNumber = calculatedCheckNumber <= 1 ? 0 : 11 - calculatedCheckNumber;
 
-            return calculatedCheckNumber;
-        }
-
-        /// <summary>
-        /// Validierung der Prüfziffer in einer Mitgliedsnummer
-        /// </summary>
-        /// <param name="membershipNumber">Die Mitgliedsnummmer</param>
-        /// <returns><code>TRUE</code>, wenn die errechnete und die in der Mitgliedsnummer enthaltene Prüfziffer gleich ist. Sonst <code>FALSE</code></returns>
-        public bool Validate(string membershipNumber)
-        {
-            var originChecknumber = ExtractCheckNumber(membershipNumber);
-            var calculatedChecknumber = (int)Calculate(membershipNumber);
-            return originChecknumber == calculatedChecknumber;
-        }
-
-        private int ExtractCheckNumber(string membershipNumber)
-        {
-            string mgnr = membershipNumber.Trim();
-            return Convert.ToUInt16(mgnr.Substring(mgnr.Length - 1, 1));
+            return new[] { calculatedCheckNumber.ToString("D", CultureInfo.InvariantCulture) };
         }
     }
 }

@@ -1,109 +1,144 @@
-﻿// <copyright file="FormatParser.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="FormatParser.cs" company="DATALINE GmbH &amp; Co. KG">
+// Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
 // </copyright>
 
-using Fare;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Dguv.Validator.Format
 {
     internal static class FormatParser
     {
-        internal static (int?, int?, string[]) ParseFormat(string format)
+        public static IEnumerable<FormatItem> ParseFormat(string format)
         {
-            int? minLength = null;
-            int? maxLength = null;
+            return format.Split(':').Select(ParseItem).Where(x => x != null);
+        }
 
-            var regExPatterns = new List<string>();
+        private static FormatItem ParseItem(string format)
+        {
+            if (string.IsNullOrWhiteSpace(format))
+                return null;
 
-            var chars = new char[] { '(', ')' };
-            if (format != string.Empty)
+            int minLength = 0;
+            int maxLength = 0;
+
+            var allowsWhitespace = false;
+            var lastWasChecksum = false;
+            var optionalLevel = 0;
+            var inCharacterClass = false;
+            var regexFormat = new StringBuilder();
+            var formatLength = format.Length;
+            for (int charIndex = 0; charIndex < formatLength; charIndex++)
             {
-                // Trennen der einzelnen Formate falls mehrere vorhanden sind
-                string[] splitted = format.Split(':');
+                var ch = format[charIndex];
 
-                var replaceRegex = new Regex(@"\(([^\)]+)\)");
+                string charactersToAdd = null;
 
-                var replacedSplitted = splitted.ToList().Select(x => replaceRegex.Replace(x, string.Empty));
-
-                // Die minimale Länge der Mitgliedsnummer bestimmen
-                minLength = replacedSplitted.OrderBy(s => s.Length).First().Length;
-
-                foreach (var split in splitted)
+                if (ch == '@')
                 {
-                    StringBuilder builder = new StringBuilder();
-                    builder.Append("^");
-                    string part = string.Empty;
-                    var enumerator = split.GetEnumerator();
-                    enumerator.MoveNext();
-                    int charCount = 0;
-                    char lastChar = enumerator.Current;
-                    do
+                    if (!lastWasChecksum)
                     {
-                        if (lastChar != enumerator.Current || chars.Contains(enumerator.Current))
-                        {
-                            builder.Append(part);
-                            if (charCount > 1)
-                                builder.Append($"{{{charCount}}}");
-                            charCount = 0;
-                        }
-
-                        switch (enumerator.Current)
-                        {
-                            case '#':
-                            case '@':
-                                part = @"\d";
-                                break;
-                            case '%':
-                                part = "[0-9a-zA-Z]";
-                                break;
-                            case ' ':
-                                part = @" ";
-                                break;
-                            case '.':
-                                part = @"\.";
-                                break;
-                            case ',':
-                                part = @"\,";
-                                break;
-                            case '[':
-                                part = @"(";
-                                break;
-                            case ']':
-                                part = @")";
-                                break;
-                            case ')':
-                                part = $"{enumerator.Current.ToString()}?";
-                                charCount--;
-                                break;
-                            default:
-                                part = $"{enumerator.Current.ToString()}";
-                                break;
-                        }
-
-                        lastChar = enumerator.Current;
-                        charCount++;
+                        regexFormat.Append("(?<checksum>");
+                        lastWasChecksum = true;
                     }
-                    while (enumerator.MoveNext());
 
-                    builder.Append(part);
-                    if (charCount > 0)
-                        builder.Append($"{{{charCount}}}");
-                    builder.Append("$");
+                    charactersToAdd = @"\d";
+                }
+                else
+                {
+                    if (lastWasChecksum)
+                    {
+                        regexFormat.Append(")");
+                        lastWasChecksum = false;
+                    }
 
-                    var pattern = builder.ToString();
-                    int possibleLength = new Xeger(pattern.Replace("((", "[").Replace("))", "]").Replace("(", "[").Replace(")", "]")).Generate().ToString().Length;
-                    if (maxLength == null || maxLength < possibleLength)
-                        maxLength = possibleLength;
+                    switch (ch)
+                    {
+                        case '#':
+                            charactersToAdd = @"\d";
+                            break;
+                        case '%':
+                            charactersToAdd = "[a-zA-Z0-9]";
+                            break;
+                        case ' ':
+                            charactersToAdd = " ";
+                            allowsWhitespace = true;
+                            break;
+                        case '[':
+                            regexFormat.Append("[");
 
-                    regExPatterns.Add(pattern);
+                            inCharacterClass = true;
+
+                            if (optionalLevel == 0)
+                            {
+                                minLength += 1;
+                            }
+
+                            maxLength += 1;
+
+                            break;
+                        case ']':
+                            regexFormat.Append("]");
+                            inCharacterClass = false;
+                            break;
+                        case '|':
+                            if (!inCharacterClass)
+                            {
+                                throw new NotSupportedException($"Das Zeichen {ch} außerhalb von '[' und ']' wird nicht unterstützt.");
+                            }
+
+                            break;
+                        case '(':
+                            regexFormat.Append("(");
+                            optionalLevel += 1;
+                            break;
+                        case ')':
+                            regexFormat.Append(")?");
+                            optionalLevel -= 1;
+                            break;
+                        default:
+                            if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9') ||
+                                ch == '-' || ch == ',' || ch == '/')
+                            {
+                                charactersToAdd = ch.ToString();
+                            }
+                            else if (ch == '.')
+                            {
+                                charactersToAdd = @"\.";
+                            }
+                            else
+                            {
+                                throw new NotSupportedException($"Die Zeichenklasse {ch} wird nicht unterstützt.");
+                            }
+
+                            break;
+                    }
+                }
+
+                if (charactersToAdd != null)
+                {
+                    if (optionalLevel == 0 && !inCharacterClass)
+                    {
+                        minLength += 1;
+                    }
+
+                    if (!inCharacterClass)
+                    {
+                        maxLength += 1;
+                    }
+
+                    regexFormat.Append(charactersToAdd);
                 }
             }
-            return (minLength, maxLength, regExPatterns.ToArray());
+
+            if (lastWasChecksum)
+            {
+                regexFormat.Append(")");
+            }
+
+            return new FormatItem(minLength, maxLength, regexFormat.ToString(), allowsWhitespace);
         }
     }
 }

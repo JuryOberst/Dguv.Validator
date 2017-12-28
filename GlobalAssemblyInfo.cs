@@ -17,6 +17,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("de")]
 [assembly: InternalsVisibleTo("Dguv.Validator.Format.Test")]
+
 // Versionsinformationen für eine Assembly bestehen aus den folgenden vier Werten:
 //
 //      Hauptversion

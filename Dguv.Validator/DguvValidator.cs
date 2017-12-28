@@ -40,41 +40,23 @@ namespace Dguv.Validator
 
         /// <summary>
         /// Überprüft, ob die Kombination aus UV-Betriebsnummer und Mitgliedsnummer gültig ist und
-        /// wirft eine Exception aus, wenn ein Fehler auftritt.
-        /// </summary>
-        /// <param name="bbnrUv">Die Betriebsnummer eines Unfallversicherungsträgers</param>
-        /// <param name="memberId">Die Mitgliedsnummer eines Unfallversicherungsträgers</param>
-        public void Validate(string bbnrUv, string memberId)
-        {
-            var status = GetStatus(bbnrUv, memberId);
-            if (status.StatusCode != 0)
-                throw new DguvValidationException(status.GetStatusText());
-        }
-
-        /// <summary>
-        /// Überprüft, ob die Kombination aus UV-Betriebsnummer und Mitgliedsnummer gültig ist und
         /// gibt im Falle eines Fehlers eine Fehlermeldung zurück.
         /// </summary>
         /// <param name="bbnrUv">Die Betriebsnummer eines Unfallversicherungsträgers</param>
         /// <param name="memberId">Die Mitgliedsnummer eines Unfallversicherungsträgers</param>
         /// <returns>Die Fehlermeldung oder null, wenn kein Fehler aufgetreten ist.</returns>
-        public IStatus GetStatus(string bbnrUv, string memberId)
+        public IStatus Validate(string bbnrUv, string memberId)
         {
-            if (!_checks.TryGetValue(bbnrUv, out IDguvNumberCheck check))
-                return new Status(7);
-            return check.GetStatus(memberId);
+            if (_checks.TryGetValue(bbnrUv, out var check))
+                return check.Validate(memberId);
+            return new DguvValidatorStatus();
         }
 
-        /// <summary>
-        /// Überprüft, ob die Kombination aus UV-Betriebsnummer und Mitgliedsnummer gültig ist und
-        /// gibt im Falle eines Fehlers den Wert false zurück.
-        /// </summary>
-        /// <param name="bbnrUv">Die Betriebsnummer eines Unfallversicherungsträgers</param>
-        /// <param name="memberId">Die Mitgliedsnummer eines Unfallversicherungsträgers</param>
-        /// <returns>true, wenn die Kombination aus <paramref name="bbnrUv"/> und <paramref name="memberId"/> gültig ist.</returns>
-        public bool IsValid(string bbnrUv, string memberId)
+        private class DguvValidatorStatus : IStatus
         {
-            return GetStatus(bbnrUv, memberId).StatusCode == 0;
+            public bool IsSuccessful => false;
+
+            public string GetStatusText() => Resources.StatusInvalidBbnrUv;
         }
     }
 }

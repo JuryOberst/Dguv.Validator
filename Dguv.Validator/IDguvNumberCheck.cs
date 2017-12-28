@@ -22,18 +22,11 @@ namespace Dguv.Validator
         string Name { get; }
 
         /// <summary>
-        /// Prüft, ob die Mitgliedsnummer für den Unfallversicherungsträger gültig ist.
-        /// </summary>
-        /// <param name="memberId">Die zu prüfenden Mitgliedsnummer</param>
-        /// <returns>true, wenn die Mitgliedsnummer gültig ist</returns>
-        bool IsValid(string memberId);
-
-        /// <summary>
         /// Prüft, ob die Mitgliedsnummer für den Unfallversicherungsträger gültig ist und liefert im
         /// Falle eines Fehlers die Fehlermeldung zurück.
         /// </summary>
         /// <param name="memberId">Die zu prüfenden Mitgliedsnummer</param>
-        /// <returns>null, wenn die Mitgliedsnummer gültig ist, ansonsten die Fehlermeldung</returns>
-        IStatus GetStatus(string memberId);
+        /// <returns>Status der Validierung</returns>
+        IStatus Validate(string memberId);
     }
 }
