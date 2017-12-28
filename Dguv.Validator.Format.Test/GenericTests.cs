@@ -29,7 +29,7 @@ namespace Dguv.Validator.Tests
             var checks = await new DguvTextCheckProvider().LoadChecks();
             var check = checks.FirstOrDefault(x => x.BbnrUv == bnr);
             var status = check.GetStatus(mitgliedsnummer);
-            output.WriteLine(status);
+            output.WriteLine(status.GetStatusText());
             Assert.True(check.IsValid(mitgliedsnummer));
         }
 
@@ -40,7 +40,7 @@ namespace Dguv.Validator.Tests
             var checks = await new DguvTextCheckProvider().LoadChecks();
             var check = checks.FirstOrDefault(x => x.BbnrUv == bnr);
             var status = check.GetStatus(mitgliedsnummer);
-            output.WriteLine(status);
+            output.WriteLine(status.GetStatusText());
             Assert.False(check.IsValid(mitgliedsnummer));
         }
     }

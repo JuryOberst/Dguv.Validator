@@ -34,6 +34,6 @@ namespace Dguv.Validator
         /// </summary>
         /// <param name="memberId">Die zu prüfenden Mitgliedsnummer</param>
         /// <returns>null, wenn die Mitgliedsnummer gültig ist, ansonsten die Fehlermeldung</returns>
-        string GetStatus(string memberId);
+        IStatus GetStatus(string memberId);
     }
 }

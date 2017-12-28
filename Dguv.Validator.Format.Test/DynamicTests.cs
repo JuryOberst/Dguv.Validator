@@ -28,11 +28,26 @@ namespace Dguv.Validator.Format.Tests
                     {
                         var membershipNumber = new Xeger(pattern).Generate();
 
-                        var result = de.werum.dguv.mgnr.plausi.PlausiFacade.getInstance().doPlausi(2, check.BbnrUv, membershipNumber);
+                        var pi = new System.Diagnostics.ProcessStartInfo(@"lib\pl_mgnr.exe", $"-p 2 -u {check.BbnrUv} -m {membershipNumber}");
+                        pi.CreateNoWindow = true;
+                        pi.RedirectStandardOutput = true;
+                        pi.UseShellExecute = false;
+                        var process = new System.Diagnostics.Process
+                        {
+                            StartInfo = pi
+                            
+                        };
+                        process.Start();
+                        process.WaitForExit();
+                        var processExitCode = process.ExitCode;
+
+                        // FIXIT J.Oberst: Ein Fehler tritt auf. 
+                        //var plausi = de.werum.dguv.mgnr.plausi.PlausiFacade.getInstance();
+                        //var result = plausi.doPlausi(2, check.BbnrUv, membershipNumber);
+                        //var result = de.werum.dguv.mgnr.plausi.PlausiFacade.getInstance().doPlausi(2, check.BbnrUv, membershipNumber);
                         var status = check.GetStatus(membershipNumber);
 
-                        Assert.True(status == null && result.getErrorStatus() == 1 ||
-                            status == Dguv.Validator.Properties.Resources.StatusMemberIdInvalidChecknumber && result.getErrorStatus() == 5,
+                        Assert.True((status.StatusCode == 0 && processExitCode == 0) || (processExitCode != 0 && status.StatusCode != 0),
                             $"Mitglidsnummer {membershipNumber} zu der BNr {check.BbnrUv} (Prüfung fehlerhaft)");
                     }
             }

@@ -47,8 +47,8 @@ namespace Dguv.Validator
         public void Validate(string bbnrUv, string memberId)
         {
             var status = GetStatus(bbnrUv, memberId);
-            if (status != null)
-                throw new DguvValidationException(status);
+            if (status.StatusCode != 0)
+                throw new DguvValidationException(status.GetStatusText());
         }
 
         /// <summary>
@@ -58,10 +58,10 @@ namespace Dguv.Validator
         /// <param name="bbnrUv">Die Betriebsnummer eines Unfallversicherungsträgers</param>
         /// <param name="memberId">Die Mitgliedsnummer eines Unfallversicherungsträgers</param>
         /// <returns>Die Fehlermeldung oder null, wenn kein Fehler aufgetreten ist.</returns>
-        public string GetStatus(string bbnrUv, string memberId)
+        public IStatus GetStatus(string bbnrUv, string memberId)
         {
             if (!_checks.TryGetValue(bbnrUv, out IDguvNumberCheck check))
-                return Resources.StatusInvalidBbnrUv;
+                return new Status(7);
             return check.GetStatus(memberId);
         }
 
@@ -74,7 +74,7 @@ namespace Dguv.Validator
         /// <returns>true, wenn die Kombination aus <paramref name="bbnrUv"/> und <paramref name="memberId"/> gültig ist.</returns>
         public bool IsValid(string bbnrUv, string memberId)
         {
-            return GetStatus(bbnrUv, memberId) == null;
+            return GetStatus(bbnrUv, memberId).StatusCode == 0;
         }
     }
 }

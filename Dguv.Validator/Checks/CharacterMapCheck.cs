@@ -91,7 +91,7 @@ namespace Dguv.Validator.Checks
         /// <returns>true, wenn die Mitgliedsnummer gültig ist</returns>
         public bool IsValid(string memberId)
         {
-            return GetStatus(memberId) == null;
+            return GetStatus(memberId).StatusCode == 0;
         }
 
         /// <summary>
@@ -100,21 +100,21 @@ namespace Dguv.Validator.Checks
         /// </summary>
         /// <param name="memberId">Die zu prüfenden Mitgliedsnummer</param>
         /// <returns>null, wenn die Mitgliedsnummer gültig ist, ansonsten die Fehlermeldung</returns>
-        public string GetStatus(string memberId)
+        public IStatus GetStatus(string memberId)
         {
             if (!IsValidationRequired)
-                return null;
+                return new Status(0);
             if (string.IsNullOrEmpty(memberId))
-                return Resources.StatusMemberIdMissing;
+                return new Status(6);
             if (MinLength != null && memberId.Length < MinLength)
-                return string.Format(Resources.StatusMemberIdTooShort, MinLength);
+                return new Status(2, null, MinLength, null);
             if (MaxLength != null && memberId.Length > MaxLength)
-                return string.Format(Resources.StatusMemberIdTooLong, MaxLength);
+                return new Status(3, MaxLength, null, null);
             if (ValidCharacters == null || ValidCharacters.Count == 0)
-                return null;
+                return new Status(0);
             if (!memberId.ToCharArray().All(x => ValidCharacters.Contains(x)))
-                return string.Format(Resources.StatusMemberIdInvalidCharacter, _validCharacters);
-            return null;
+                return new Status(1, null, null, _validCharacters);
+            return new Status(0);
         }
     }
 }

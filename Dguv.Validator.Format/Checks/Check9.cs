@@ -55,8 +55,13 @@ namespace Dguv.Validator.Format.Checks
 
         private int ExtractCheckNumber(string membershipNumber)
         {
+            int checkNumber = 0;
             var mgnr = membershipNumber.Trim();
-            return Convert.ToUInt16(mgnr.Substring(7, 1));
+            if (mgnr.StartsWith("0"))
+            {
+                checkNumber = Convert.ToUInt16(mgnr.Substring(7, 1));
+            }
+            return checkNumber;
         }
     }
 }

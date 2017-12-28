@@ -16,13 +16,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Data\uv171001_v4.txt" />
+    <None Remove="Data\formats.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Data\uv171001_v4.txt">
+    <EmbeddedResource Include="Data\formats.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fare" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>

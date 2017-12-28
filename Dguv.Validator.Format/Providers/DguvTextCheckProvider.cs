@@ -44,7 +44,7 @@ namespace Dguv.Validator.Format.Providers
             List<IDguvNumberCheck> checks = new List<IDguvNumberCheck>();
 
             // Eventuel sollte man die Textdatei auf einen Server legen und diese von dort laden.
-            using (FileStream fs = File.Open("Data/uv171001_v4.txt", FileMode.Open, FileAccess.Read))
+            using (FileStream fs = File.Open("Data/formats.txt", FileMode.Open, FileAccess.Read))
             {
                 using (BufferedStream bs = new BufferedStream(fs))
                 {

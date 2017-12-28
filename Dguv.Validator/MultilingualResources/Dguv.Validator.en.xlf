@@ -44,11 +44,15 @@
         </trans-unit>
         <trans-unit id="StatusMemberIdInvalidChecknumber" translate="yes" xml:space="preserve">
           <source>Die Prüfziffer scheint nicht korrekt zu sein.</source>
-          <target state="new">Die Prüfziffer scheint nicht korrekt zu sein.</target>
+          <target state="new">The check number is wrong</target>
         </trans-unit>
         <trans-unit id="StatusMemberIdInvalidStructure" translate="yes" xml:space="preserve">
           <source>Fehler im Aufbau der Mitgliedsnummer.</source>
-          <target state="new">Fehler im Aufbau der Mitgliedsnummer.</target>
+          <target state="new">The structure of the membership number is wrong</target>
+        </trans-unit>
+        <trans-unit id="StatusOK" translate="yes" xml:space="preserve">
+          <source>Die Mitgliednummer ist OK</source>
+          <target state="new">The membership number is OK</target>
         </trans-unit>
       </group>
     </body>

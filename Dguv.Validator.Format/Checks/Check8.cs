@@ -21,7 +21,7 @@ namespace Dguv.Validator.Format.Checks
             int calculatedCheckNumber = 0, sum = 0;
             string concated = string.Empty;
             var trimmed = membershipNumber.Trim();
-            trimmed = trimmed.Length == 8 ? trimmed.Substring(1, 5) : trimmed.Substring(0, 5);
+            trimmed = trimmed.Length == 8 ? trimmed.Substring(2, 5) : trimmed.Substring(0, 5);
             if (trimmed.Length == 5)
             {
                 var mgnr_parts = trimmed.ToCharArray();
