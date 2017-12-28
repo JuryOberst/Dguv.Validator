@@ -159,5 +159,14 @@ namespace Dguv.Validator.Properties {
                 return ResourceManager.GetString("StatusMemberIdTooShort", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Die Mitgliednummer ist OK ähnelt.
+        /// </summary>
+        internal static string StatusOK {
+            get {
+                return ResourceManager.GetString("StatusOK", resourceCulture);
+            }
+        }
     }
 }

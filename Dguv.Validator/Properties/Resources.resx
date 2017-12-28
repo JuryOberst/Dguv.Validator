@@ -150,4 +150,7 @@
   <data name="StatusMemberIdTooShort" xml:space="preserve">
     <value>Die Mitgliedsnummer ist zu kurz. Sie muss eine Länge von mindestens {0} Zeichen haben.</value>
   </data>
+  <data name="StatusOK" xml:space="preserve">
+    <value>Die Mitgliednummer ist OK</value>
+  </data>
 </root>

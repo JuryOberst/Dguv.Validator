@@ -26,7 +26,7 @@ namespace Dguv.Validator
         /// <param name="bbnrUv">Die Betriebsnummer eines Unfallversicherungsträgers</param>
         /// <param name="memberId">Die Mitgliedsnummer eines Unfallversicherungsträgers</param>
         /// <returns>Die Fehlermeldung oder null, wenn kein Fehler aufgetreten ist.</returns>
-        string GetStatus(string bbnrUv, string memberId);
+        IStatus GetStatus(string bbnrUv, string memberId);
 
         /// <summary>
         /// Überprüft, ob die Kombination aus UV-Betriebsnummer und Mitgliedsnummer gültig ist und

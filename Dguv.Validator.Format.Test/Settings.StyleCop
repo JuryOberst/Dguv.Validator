@@ -1,0 +1,14 @@
+<StyleCopSettings Version="105">
+  <GlobalSettings>
+    <StringProperty Name="Culture">de-DE</StringProperty>
+  </GlobalSettings>
+  <SourceFileList>
+    <SourceFile>UseCultureAttribute.cs</SourceFile>
+    <Settings>
+      <GlobalSettings>
+        <BooleanProperty Name="RulesEnabledByDefault">False</BooleanProperty>
+        <StringProperty Name="Culture">en-US</StringProperty>
+      </GlobalSettings>
+    </Settings>
+  </SourceFileList>
+</StyleCopSettings>

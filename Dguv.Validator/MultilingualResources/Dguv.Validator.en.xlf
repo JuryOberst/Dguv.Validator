@@ -42,6 +42,18 @@
           <source>Die Mitgliedsnummer ist zu kurz. Sie muss eine Länge von mindestens {0} Zeichen haben.</source>
           <target state="final" state-qualifier="mt-suggestion">The membership number is too short. She must have a length of at least {0} characters.</target>
         </trans-unit>
+        <trans-unit id="StatusMemberIdInvalidChecknumber" translate="yes" xml:space="preserve">
+          <source>Die Prüfziffer scheint nicht korrekt zu sein.</source>
+          <target state="new">The check number is wrong</target>
+        </trans-unit>
+        <trans-unit id="StatusMemberIdInvalidStructure" translate="yes" xml:space="preserve">
+          <source>Fehler im Aufbau der Mitgliedsnummer.</source>
+          <target state="new">The structure of the membership number is wrong</target>
+        </trans-unit>
+        <trans-unit id="StatusOK" translate="yes" xml:space="preserve">
+          <source>Die Mitgliednummer ist OK</source>
+          <target state="new">The membership number is OK</target>
+        </trans-unit>
       </group>
     </body>
   </file>
