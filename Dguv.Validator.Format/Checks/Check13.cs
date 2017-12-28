@@ -43,7 +43,7 @@ namespace Dguv.Validator.Format.Checks
                 multiplier = 4 - multiplier;
             }
 
-            var calculatedCheckNumber = sum % 10;
+            var calculatedCheckNumber = 10 - (sum % 10);
             return calculatedCheckNumber == 10 ? 0 : calculatedCheckNumber;
         }
 
