@@ -84,37 +84,37 @@ namespace Dguv.Validator.Checks
         /// </summary>
         public bool IsValidationRequired => MinLength != null || MaxLength != null || (ValidCharacters != null && ValidCharacters.Count != 0);
 
-        /// <summary>
-        /// Prüft, ob die Mitgliedsnummer für den Unfallversicherungsträger gültig ist.
-        /// </summary>
-        /// <param name="memberId">Die zu prüfenden Mitgliedsnummer</param>
-        /// <returns>true, wenn die Mitgliedsnummer gültig ist</returns>
-        public bool IsValid(string memberId)
-        {
-            return GetStatus(memberId).StatusCode == 0;
-        }
-
-        /// <summary>
-        /// Prüft, ob die Mitgliedsnummer für den Unfallversicherungsträger gültig ist und liefert im
-        /// Falle eines Fehlers die Fehlermeldung zurück.
-        /// </summary>
-        /// <param name="memberId">Die zu prüfenden Mitgliedsnummer</param>
-        /// <returns>null, wenn die Mitgliedsnummer gültig ist, ansonsten die Fehlermeldung</returns>
-        public IStatus GetStatus(string memberId)
+        /// <inheritdoc />
+        public IStatus Validate(string memberId)
         {
             if (!IsValidationRequired)
-                return new Status(0);
+                return new CharacterMapStatus(true, Resources.StatusOK);
             if (string.IsNullOrEmpty(memberId))
-                return new Status(6);
+                return new CharacterMapStatus(false, Resources.StatusMemberIdMissing);
             if (MinLength != null && memberId.Length < MinLength)
-                return new Status(2, null, MinLength, null);
+                return new CharacterMapStatus(false, string.Format(Resources.StatusMemberIdTooShort, MinLength));
             if (MaxLength != null && memberId.Length > MaxLength)
-                return new Status(3, MaxLength, null, null);
+                return new CharacterMapStatus(false, string.Format(Resources.StatusMemberIdTooLong, MaxLength));
             if (ValidCharacters == null || ValidCharacters.Count == 0)
-                return new Status(0);
+                return new CharacterMapStatus(true, Resources.StatusOK);
             if (!memberId.ToCharArray().All(x => ValidCharacters.Contains(x)))
-                return new Status(1, null, null, _validCharacters);
-            return new Status(0);
+                return new CharacterMapStatus(false, string.Format(Resources.StatusMemberIdInvalidCharacter, _validCharacters));
+            return new CharacterMapStatus(true, Resources.StatusOK);
+        }
+
+        private class CharacterMapStatus : IStatus
+        {
+            private readonly string _statusMessage;
+
+            public CharacterMapStatus(bool isSuccessful, string statusMessage)
+            {
+                _statusMessage = statusMessage;
+                IsSuccessful = isSuccessful;
+            }
+
+            public bool IsSuccessful { get; }
+
+            public string GetStatusText() => _statusMessage;
         }
     }
 }

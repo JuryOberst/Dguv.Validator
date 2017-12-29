@@ -1,4 +1,8 @@
-﻿namespace Dguv.Validator
+﻿// <copyright file="IStatus.cs" company="DATALINE GmbH &amp; Co. KG">
+// Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
+// </copyright>
+
+namespace Dguv.Validator
 {
     /// <summary>
     /// Interface für die Rückgabe der Mitgliedsnummern-Prüfung
@@ -6,9 +10,9 @@
     public interface IStatus
     {
         /// <summary>
-        /// Holt den Statuscode
+        /// Holt einen Wert, der angibt, ob die Mitgliedsnummer gültig ist.
         /// </summary>
-        int StatusCode { get; }
+        bool IsSuccessful { get; }
 
         /// <summary>
         /// Ruft den Meldungstext zu einem Statuscode ab

@@ -95,18 +95,12 @@ namespace Dguv.Validator.Providers
         /// <summary>
         /// Holt eine Liste von Prüfungen für Unfallversicherungsträger
         /// </summary>
-        public IEnumerable<IDguvNumberCheck> Checks => _checks;
+        internal IEnumerable<IDguvNumberCheck> Checks => _checks;
 
-        /// <summary>
-        /// Lädt die Prüfungen von Unfallversicherungsträgern.
-        /// </summary>
-        /// <returns>Ein <see cref="Task"/>, in dem das Laden der Prüfungen
-        /// von Unfallversicherungsträgern ausgeführt wird.</returns>
+        /// <inheritdoc />
         public Task<IEnumerable<IDguvNumberCheck>> LoadChecks()
         {
-            var result = new TaskCompletionSource<IEnumerable<IDguvNumberCheck>>();
-            result.SetResult(_checks);
-            return result.Task;
+            return Task.FromResult((IEnumerable<IDguvNumberCheck>)_checks);
         }
     }
 }

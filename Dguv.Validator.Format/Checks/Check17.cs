@@ -1,61 +1,51 @@
 ﻿// <copyright file="Check17.cs" company="DATALINE GmbH &amp; Co. KG">
 // Copyright (c) DATALINE GmbH &amp; Co. KG. All rights reserved.
 // </copyright>
-using System;
+
+using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Dguv.Validator.Format.Checks
 {
     /// <summary>
     /// Prüfziffernberechnung 17
     /// </summary>
-    public class Check17 : ICheckNumberValidator
+    public class Check17 : IDguvChecksumHandler
     {
-        /// <summary>
-        /// Berechnung der Prüfziffer anhand der Mitgliedsnummer
-        /// </summary>
-        /// <param name="membershipNumber">Die Mitgliedsnummer</param>
-        /// <returns>Die errechnete Prüfziffer</returns>
-        public object Calculate(string membershipNumber)
+        /// <inheritdoc />
+        public int Id => 17;
+
+        /// <inheritdoc />
+        public string[] Calculate(string membershipNumber)
         {
             int calculatedCheckNumber = 0, sum = 0;
-            string trimmed = membershipNumber.Trim();
+            string trimmed = membershipNumber.ExtractDigits();
             trimmed = trimmed.Substring(0, 7);
 
-            var mgnr_numbers = Array.ConvertAll(trimmed.Substring(0, trimmed.Length - 1).ToCharArray(), c => (int)char.GetNumericValue(c));
-            string concated = string.Empty;
+            var mgnr_numbers = trimmed.Substring(0, trimmed.Length - 1).ToCharArray().Select(c => (int)char.GetNumericValue(c)).ToArray();
+            var concatenated = new int[12];
+            var concatenatedIndex = 0;
             if (mgnr_numbers.Length == 6)
             {
-                concated = concated + (2 * mgnr_numbers[0]);
-                concated = concated + mgnr_numbers[1];
-                concated = concated + (2 * mgnr_numbers[2]);
-                concated = concated + mgnr_numbers[3];
-                concated = concated + (2 * mgnr_numbers[4]);
-                concated = concated + mgnr_numbers[0];
-                sum = Array.ConvertAll(concated.ToCharArray(), c => (int)char.GetNumericValue(c)).Sum();
+                AddDigits(concatenated, ref concatenatedIndex, 2 * mgnr_numbers[0]);
+                AddDigits(concatenated, ref concatenatedIndex, 1 * mgnr_numbers[1]);
+                AddDigits(concatenated, ref concatenatedIndex, 2 * mgnr_numbers[2]);
+                AddDigits(concatenated, ref concatenatedIndex, 1 * mgnr_numbers[3]);
+                AddDigits(concatenated, ref concatenatedIndex, 2 * mgnr_numbers[4]);
+                AddDigits(concatenated, ref concatenatedIndex, 1 * mgnr_numbers[5]);
+                sum = concatenated.Sum();
                 calculatedCheckNumber = sum % 10;
             }
 
-            return calculatedCheckNumber;
+            return new[] { calculatedCheckNumber.ToString("D", CultureInfo.InvariantCulture) };
         }
 
-        /// <summary>
-        /// Validierung der Prüfziffer in einer Mitgliedsnummer
-        /// </summary>
-        /// <param name="membershipNumber">Die Mitgliedsnummmer</param>
-        /// <returns><code>TRUE</code>, wenn die errechnete und die in der Mitgliedsnummer enthaltene Prüfziffer gleich ist. Sonst <code>FALSE</code></returns>
-        public bool Validate(string membershipNumber)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void AddDigits(int[] concatenated, ref int concatenatedIndex, int number)
         {
-            var originChecknumber = ExtractCheckNumber(membershipNumber);
-            var calculatedChecknumber = (int)Calculate(membershipNumber);
-            return originChecknumber == calculatedChecknumber;
-        }
-
-        private int ExtractCheckNumber(string membershipNumber)
-        {
-            string mgnr = membershipNumber.Trim();
-            mgnr = mgnr.Substring(0, 7);
-            return Convert.ToUInt16(mgnr.Substring(mgnr.Length - 1, 1));
+            concatenated[concatenatedIndex++] = number % 10;
+            concatenated[concatenatedIndex++] = number / 10;
         }
     }
 }

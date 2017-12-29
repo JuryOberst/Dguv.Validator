@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard1.1;netstandard2.0;net45</TargetFrameworks>
     <CodeAnalysisRuleSet>..\Dataline.ruleset</CodeAnalysisRuleSet>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
@@ -20,16 +20,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Data\formats.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fare" Version="1.0.4" />
+    <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Data\formats.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dguv.Validator.JavaFormat\Dguv.Validator.JavaFormat.csproj" />
     <ProjectReference Include="..\Dguv.Validator\Dguv.Validator.csproj" />
   </ItemGroup>
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-using Xunit;
+﻿using Xunit;
 
 namespace Dguv.Validator.Tests
 {
@@ -12,8 +10,8 @@ namespace Dguv.Validator.Tests
         [InlineData("15250094", "1234567890")]
         public void TestSuccess1(string bbnrUv, string memberId)
         {
-            Assert.True(_validator.IsValid(bbnrUv, memberId));
-            Assert.True(_validator.GetStatus(bbnrUv, memberId).StatusCode == 0);
+            var status = _validator.Validate(bbnrUv, memberId);
+            Assert.True(status.IsSuccessful);
             _validator.Validate(bbnrUv, memberId);
         }
 
@@ -23,9 +21,10 @@ namespace Dguv.Validator.Tests
         public void TestTooShort(string bbnrUv, string memberId)
         {
             const string errorMessage = "Die Mitgliedsnummer ist zu kurz. Sie muss eine Länge von mindestens 10 Zeichen haben.";
-            Assert.False(_validator.IsValid(bbnrUv, memberId));
-            Assert.Equal(errorMessage, _validator.GetStatus(bbnrUv, memberId).GetStatusText());
-            Assert.Equal(errorMessage, Assert.Throws<DguvValidationException>(() => _validator.Validate(bbnrUv, memberId)).GetFirstLine());
+            var status = _validator.Validate(bbnrUv, memberId);
+            Assert.False(status.IsSuccessful);
+            Assert.Equal(errorMessage, status.GetStatusText());
+            Assert.Equal(errorMessage, Assert.Throws<DguvValidationException>(() => status.EnsureSuccess()).GetFirstLine());
         }
 
         [Theory]
@@ -34,9 +33,10 @@ namespace Dguv.Validator.Tests
         public void TestTooLong(string bbnrUv, string memberId)
         {
             const string errorMessage = "Die Mitgliedsnummer ist zu lang. Sie darf höchstens eine Länge von 10 Zeichen haben.";
-            Assert.False(_validator.IsValid(bbnrUv, memberId));
-            Assert.Equal(errorMessage, _validator.GetStatus(bbnrUv, memberId).GetStatusText());
-            Assert.Equal(errorMessage, Assert.Throws<DguvValidationException>(() => _validator.Validate(bbnrUv, memberId)).GetFirstLine());
+            var status = _validator.Validate(bbnrUv, memberId);
+            Assert.False(status.IsSuccessful);
+            Assert.Equal(errorMessage, status.GetStatusText());
+            Assert.Equal(errorMessage, Assert.Throws<DguvValidationException>(() => status.EnsureSuccess()).GetFirstLine());
         }
 
         [Theory]
@@ -45,9 +45,10 @@ namespace Dguv.Validator.Tests
         public void TestInvalidCharacter(string bbnrUv, string memberId)
         {
             const string errorMessage = "Die Mitgliedsnummer enthält ein oder mehrere ungültige Zeichen. Erlaubt sind nur folgende Zeichen: \"0123456789\"";
-            Assert.False(_validator.IsValid(bbnrUv, memberId));
-            Assert.Equal(errorMessage, _validator.GetStatus(bbnrUv, memberId).GetStatusText());
-            Assert.Equal(errorMessage, Assert.Throws<DguvValidationException>(() => _validator.Validate(bbnrUv, memberId)).GetFirstLine());
+            var status = _validator.Validate(bbnrUv, memberId);
+            Assert.False(status.IsSuccessful);
+            Assert.Equal(errorMessage, status.GetStatusText());
+            Assert.Equal(errorMessage, Assert.Throws<DguvValidationException>(() => status.EnsureSuccess()).GetFirstLine());
         }
 
         [Fact]
@@ -57,9 +58,10 @@ namespace Dguv.Validator.Tests
             const string bbnrUv = "15250094";
             const string errorMessage = "Es muss eine Mitgliedsnummer angegeben werden.";
             const string memberId = "";
-            Assert.False(_validator.IsValid(bbnrUv, memberId));
-            Assert.Equal(errorMessage, _validator.GetStatus(bbnrUv, memberId).GetStatusText());
-            Assert.Equal(errorMessage, Assert.Throws<DguvValidationException>(() => _validator.Validate(bbnrUv, memberId)).GetFirstLine());
+            var status = _validator.Validate(bbnrUv, memberId);
+            Assert.False(status.IsSuccessful);
+            Assert.Equal(errorMessage, status.GetStatusText());
+            Assert.Equal(errorMessage, Assert.Throws<DguvValidationException>(() => status.EnsureSuccess()).GetFirstLine());
         }
     }
 }
