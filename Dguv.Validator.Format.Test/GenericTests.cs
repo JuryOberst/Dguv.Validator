@@ -29,6 +29,7 @@ namespace Dguv.Validator.Format.Test
         [InlineData("29029801", "280113223")]
         [InlineData("37916971", "43135684")]
         [InlineData("37916971", "2 244 695-0")]
+        [InlineData("63800761", "MM 22.238434006-39")]
         public async Task TestSuccess(string bnr, string mitgliedsnummer)
         {
             var checks = await new DguvTextCheckProvider(_testTimestamp).LoadChecks();
@@ -44,6 +45,7 @@ namespace Dguv.Validator.Format.Test
         [InlineData("29029801", "8.058286.70", 4)]
         [InlineData("63800761", "MM 72517049.673", 4)]
         [InlineData("63800761", "MM 70.381756.201-63", 4)]
+        [InlineData("63800761", "MM 39.430.012.098-12", 4)]
         public async Task TestFailed(string bnr, string mitgliedsnummer, int expectedStatus)
         {
             var checks = await new DguvTextCheckProvider(_testTimestamp).LoadChecks();
